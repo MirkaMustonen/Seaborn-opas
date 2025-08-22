@@ -1,0 +1,1876 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Opas Seaborn-kirjaston hyödyntämiseen bisnesdatan visualisoimisessa &#8212; Kirja</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'content/Salesdata';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="#">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.png" class="logo__image only-light" alt="Kirja - Home"/>
+    <script>document.write(`<img src="../_static/logo.png" class="logo__image only-dark" alt="Kirja - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1 current active">
+                <a class="reference internal" href="#">
+                    Opas Seaborn-kirjaston hyödyntämiseen bisnesdatan visualisoimisessa
+                </a>
+            </li>
+        </ul>
+        
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fcontent/Salesdata.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/content/Salesdata.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Opas Seaborn-kirjaston hyödyntämiseen bisnesdatan visualisoimisessa</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#no-code-vs-python-seaborn-visualisoinnit">No-code vs Python-Seaborn visualisoinnit</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#aloitus">Aloitus</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tilastolliset-visualisoinnit">Tilastolliset visualisoinnit</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#relaatiokaaviot">Relaatiokaaviot</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hajontakaavio">Hajontakaavio</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#viivakaavio">Viivakaavio</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kategoriset-kaaviot">Kategoriset kaaviot</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pistekaaviot">Pistekaaviot</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jakaumakaaviot">Jakaumakaaviot</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#arviokaaviot">Arviokaaviot</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jakaumien-visualisointi">Jakaumien visualisointi</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#histogrammi">Histogrammi</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tiheyskayra">Tiheyskäyrä</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#kahden-muuttujan-jakauma">Kahden muuttujan jakauma</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jointplot-ja-pairplot">Jointplot ja pairplot</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#moniulotteiset-visualisoinnit">Moniulotteiset visualisoinnit</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#facetgrid">Facetgrid</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pairgrid">Pairgrid</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lineaariset-regressiomallit">Lineaariset regressiomallit</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#teemojen-ja-tyylien-mukauttaminen">Teemojen ja tyylien mukauttaminen</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tyyli">Tyyli</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#style">Style</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#varipaletit">Väripaletit</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#varipalettien-muokkaus">Väripalettien muokkaus</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fontti-ja-context">Fontti ja context</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lahteet">Lähteet</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="opas-seaborn-kirjaston-hyodyntamiseen-bisnesdatan-visualisoimisessa">
+<h1>Opas Seaborn-kirjaston hyödyntämiseen bisnesdatan visualisoimisessa<a class="headerlink" href="#opas-seaborn-kirjaston-hyodyntamiseen-bisnesdatan-visualisoimisessa" title="Link to this heading">#</a></h1>
+<p>Seaborn-visualisoinnit laaditaan Python-koodikielellä, mutta tekoälyä hyödyntämällä myös aloittelijat onnistuvat luomaan sillä visualisointeja. Mikään tekoälytyökalu ei ole täydellinen, joten siihen ei kannata luottaa aina sokeasti. Tämä opas on luotu hyödyntäen Copilotia ja ChatGPT:tä.</p>
+<section id="no-code-vs-python-seaborn-visualisoinnit">
+<h2>No-code vs Python-Seaborn visualisoinnit<a class="headerlink" href="#no-code-vs-python-seaborn-visualisoinnit" title="Link to this heading">#</a></h2>
+<p>Seuraavassa kuvassa esimerkki miten Power BIssä ja Seabornilla tehdyt visualisoinnit eroavat toisistaan. Power BI:llä on yleensä tarkoitus luoda dashboardeja, joista ilmenee datasta esiintyvä tieto katsojalle, kun taas Python-pohjaiset Seaborn -visualisoinnit sopivat paremmin datan syvällisempään tutkimiseen. Esimerkki kuvassa Power BI jätti visualisointiin rivejä, joista puuttui arvo, jolloin näyttää, että sukupuolia olisi enemmän kuin male ja female. Seaborn ohittaa automaattisesti nämä puuttuvat arvot ja siinä merkkien selitys on myös selkeämmin esillä. Seaborn sisältää valmiita datasettejä, jotka sopivat visualisointien harjoitteluun hyvin, löydät niistä lisää <a class="reference external" href="https://www.geeksforgeeks.org/data-science/seaborn-datasets-for-data-science/">täältä</a>.</p>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<img alt="../_images/4bd2ea54bd728fd94495b74c6bbceae2f1b733fa7816d63cfb6d439cb7e75c87.png" src="../_images/4bd2ea54bd728fd94495b74c6bbceae2f1b733fa7816d63cfb6d439cb7e75c87.png" />
+</div>
+</div>
+</section>
+<section id="aloitus">
+<h2>Aloitus<a class="headerlink" href="#aloitus" title="Link to this heading">#</a></h2>
+<p>Voit luoda visualisoinnit esimerkiksi Jupyter notebookissa tai Google Colabissa. Koodikirjastoissa, kuten Seaborn, on valmiiksi suuri määrä eri toimintoja, joiden avulla ohjelmointia voidaan helpottaa kun jokaista koodia ei tarvitse erikseen kirjoittaa. Aluksi tuodaan (import) kaikki kirjastot, joita tarvitaan tässä notebookissa (numpy, pandas, matplotlib ja seaborn), saat lisättyä näitä myöhemminkin jos tarvitset vielä muitakin. Kirjastojen nimet lyhennetään tässä as komenolla, jotta myöhemmin kun tarvitaan koodia Seabornesta se voidaan ilmaista lyhyesti sns. Osalla kirjastoja on vakiintuneet lyhenteet, mutta jos kirjaston nimi on valmiiksi jo lyhyt sitä ei välttämättä tarvitse lyhentää.</p>
+<ul class="simple">
+<li><p>numpy</p></li>
+<li><p>pandas</p></li>
+<li><p>matplotlib</p></li>
+<li><p>seaborn</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">seaborn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sns</span> 
+</pre></div>
+</div>
+</div>
+</div>
+<p>Ohjelma ilmoittaa jos kaikkia tarvittavia kirjastoja ei ole vielä asennettu. Asennetaan vielä pyydetyt esimerkiksi openpyxl seuraavalla komennolla.</p>
+<div class="cell tag_remove-output docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>pip<span class="w"> </span>install<span class="w"> </span>openpyxl
+</pre></div>
+</div>
+</div>
+</div>
+<p>Visualisoinneissa käytetään ERP-simulaatiopelissä kertynyttä dataa, joka on tallennettu Excel-taulukkoon. Ensin tuodaan käytettävä datasetti työkirjaan. Kopioi tiedoston polku omasta kansiostasi, mutta muista lisätä r polun eteen tai tuplaa \ -merkki, jotta tiedosto toimii, /-merkki polussa toimii sellaisenaan (MacOS).</p>
+<p>Print -komennolla saadaan lista tiedoston Sales -välilehden sarakkeiden nimistä. Kaikki nimet on kirjoitettu isolla, joka saattaa vaikeuttaa datalla työskentelyä.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_sales</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_excel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;C:\Users\mirka\Downloads\odata_extraction.xlsx&#39;</span><span class="p">,</span> <span class="n">sheet_name</span><span class="o">=</span><span class="s2">&quot;Sales&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">df_sales</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">tolist</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;ID&#39;, &#39;ROW_ID&#39;, &#39;SALES_ORGANIZATION&#39;, &#39;SIM_ROUND&#39;, &#39;SIM_STEP&#39;, &#39;SIM_DATE&#39;, &#39;SIM_CALENDAR_DATE&#39;, &#39;SIM_PERIOD&#39;, &#39;SIM_ELAPSED_STEPS&#39;, &#39;SALES_ORDER_NUMBER&#39;, &#39;LINE_ITEM&#39;, &#39;STORAGE_LOCATION&#39;, &#39;REGION&#39;, &#39;AREA&#39;, &#39;CITY&#39;, &#39;COUNTRY&#39;, &#39;POSTAL_CODE&#39;, &#39;CUSTOMER_NUMBER&#39;, &#39;DISTRIBUTION_CHANNEL&#39;, &#39;MATERIAL_NUMBER&#39;, &#39;MATERIAL_DESCRIPTION&#39;, &#39;MATERIAL_TYPE&#39;, &#39;MATERIAL_CODE&#39;, &#39;MATERIAL_SIZE&#39;, &#39;MATERIAL_LABEL&#39;, &#39;QUANTITY&#39;, &#39;QUANTITY_DELIVERED&#39;, &#39;UNIT&#39;, &#39;NET_PRICE&#39;, &#39;NET_VALUE&#39;, &#39;COST&#39;, &#39;CURRENCY&#39;, &#39;CONTRIBUTION_MARGIN&#39;, &#39;CONTRIBUTION_MARGIN_PCT&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+<p>Muokataan sarake nimiä komennolla: .str.strip().str.lower(), joka poistaa ylimääräiset välilyönnit sekä muuttaa nimet pienelle kirjoitukselle.</p>
+<p>Käytetään vielä print -komentoa tarkistamaan lopputulos. Tulostetaan esiin myös data tyypit ja tarkistetaan, että numeromuodossa tarvittavat sarakkeet, kuten määrät ja arvot, ovat muodoltaan int64 (kokonaisluvut) tai float64 (desimaaliluvut).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_sales</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="n">df_sales</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">df_sales</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">tolist</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df_sales</span><span class="o">.</span><span class="n">nunique</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df_sales</span><span class="o">.</span><span class="n">dtypes</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;id&#39;, &#39;row_id&#39;, &#39;sales_organization&#39;, &#39;sim_round&#39;, &#39;sim_step&#39;, &#39;sim_date&#39;, &#39;sim_calendar_date&#39;, &#39;sim_period&#39;, &#39;sim_elapsed_steps&#39;, &#39;sales_order_number&#39;, &#39;line_item&#39;, &#39;storage_location&#39;, &#39;region&#39;, &#39;area&#39;, &#39;city&#39;, &#39;country&#39;, &#39;postal_code&#39;, &#39;customer_number&#39;, &#39;distribution_channel&#39;, &#39;material_number&#39;, &#39;material_description&#39;, &#39;material_type&#39;, &#39;material_code&#39;, &#39;material_size&#39;, &#39;material_label&#39;, &#39;quantity&#39;, &#39;quantity_delivered&#39;, &#39;unit&#39;, &#39;net_price&#39;, &#39;net_value&#39;, &#39;cost&#39;, &#39;currency&#39;, &#39;contribution_margin&#39;, &#39;contribution_margin_pct&#39;]
+id                         3924
+row_id                     3924
+sales_organization           14
+sim_round                     4
+sim_step                     20
+sim_date                     77
+sim_calendar_date            77
+sim_period                   16
+sim_elapsed_steps            77
+sales_order_number         2272
+line_item                     7
+storage_location              1
+region                       16
+area                          3
+city                        124
+country                       1
+postal_code                 187
+customer_number             194
+distribution_channel          3
+material_number             146
+material_description         12
+material_type                 1
+material_code                12
+material_size                 2
+material_label                6
+quantity                   2976
+quantity_delivered         2976
+unit                          1
+net_price                   241
+net_value                  3814
+cost                       3708
+currency                      1
+contribution_margin        3854
+contribution_margin_pct      46
+dtype: int64
+id                                 object
+row_id                              int64
+sales_organization                 object
+sim_round                           int64
+sim_step                            int64
+sim_date                           object
+sim_calendar_date          datetime64[ns]
+sim_period                          int64
+sim_elapsed_steps                   int64
+sales_order_number                  int64
+line_item                           int64
+storage_location                    int64
+region                             object
+area                               object
+city                               object
+country                            object
+postal_code                         int64
+customer_number                     int64
+distribution_channel                int64
+material_number                    object
+material_description               object
+material_type                      object
+material_code                      object
+material_size                      object
+material_label                     object
+quantity                            int64
+quantity_delivered                  int64
+unit                               object
+net_price                         float64
+net_value                         float64
+cost                              float64
+currency                           object
+contribution_margin               float64
+contribution_margin_pct           float64
+dtype: object
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="tilastolliset-visualisoinnit">
+<h2>Tilastolliset visualisoinnit<a class="headerlink" href="#tilastolliset-visualisoinnit" title="Link to this heading">#</a></h2>
+<p>Tilastolliset visualisoinnit kuvaavat numeroarvoja sisältävää dataa. Visualisoinneissa voidaan käyttää esimerkiksi keskiarvoja, jakaumia tai yhteyksiä muihin muuttujiin.</p>
+<p>Aloitetaan yksinkertaisilla visualisoinneilla. Kuvaajissa on käytetty Matplotlibin komentoa plt.show(), jotta kuvaajaan ei tulostu ylimääräisiä selitetekstejä.</p>
+<p>Tässä Seabornilla tehty pylväskaavio, joka kuvaa eri kategorioiden tilausten keskimääräistä arvoa (y-akselilla). Pylväiden päistä lähtevät viivat kuvaavat luottamusväliä (oletus 95%), joka kuvaa mille välille todellinen keskiarvo todennäköisesti sijoittuu. Seaborn näkee datan aina ns. otoksena, joten oletuksena se antaa luottamusvälin useille kuvaajilla vaikka se ei aina ole tarpeen.</p>
+<div class="cell tag_remove-input docutils container">
+</div>
+<div class="cell tag_remove-output docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">barplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">df_sales</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;area&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;net_value&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<img alt="../_images/82e3687ac4d66876f7efbaa42c58a2eb8d6dcbb47a1e5d14ee1d9d76f70701a9.png" src="../_images/82e3687ac4d66876f7efbaa42c58a2eb8d6dcbb47a1e5d14ee1d9d76f70701a9.png" />
+</div>
+</div>
+<p>Jos halutaan luoda perinteisempi pylväskaavio, josa y-akselia ei kuvaa keskiarvo on koodiin lisättävä estimator= ja haluttu määrittäjä, esimerkiksi myyntien kokonaissumma seuraavassa visualisoinnissa. Luottamusväliä kuvaava viiva voidaan poistaa koodilla errorbar=None.</p>
+<div class="cell tag_remove-output docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">barplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">df_sales</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;area&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;net_value&quot;</span><span class="p">,</span> <span class="n">estimator</span><span class="o">=</span><span class="nb">sum</span><span class="p">,</span> <span class="n">errorbar</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<img alt="../_images/3cf82147fc9c0d7352dd72800c9575c0cbd28f5963b441b9372e4c6c6f6475e8.png" src="../_images/3cf82147fc9c0d7352dd72800c9575c0cbd28f5963b441b9372e4c6c6f6475e8.png" />
+</div>
+</div>
+<p>Seuraavassa kuvaajassa on Seabornin pointplot, jossa kolmen alueen myyntikatetta(%) (contribution_margin_pct) verrataan keskenään. Kuvaajan pisteet kuvaavat keskiarvoa ja niistä y-akselinsuuntaisesti lähtevä viiva luottamusväliä. Tässä tietopisteitä yhdistävä viiva toimii vain visuaalisena apuna kuvaamaan trendiä ja auttaa hahmottamaan varsinaisten tietopisteiden eroa, se ei kuvaa datan arvoja. Datassa sarake contribution_margin_pct on desimaalilukuna, joka muutettiin tähän kuvaajaan prosenttiluvuiksi.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">pointplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">df_sales</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;area&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;contribution_margin_pct&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span><span class="o">.</span><span class="n">yaxis</span><span class="o">.</span><span class="n">set_major_formatter</span><span class="p">(</span><span class="n">plt</span><span class="o">.</span><span class="n">FuncFormatter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">y</span><span class="p">,</span> <span class="n">_</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">y</span><span class="o">*</span><span class="mi">100</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/355121a9767f64b4c00c76f2e7452302f4846dfaddfd0329315d731086a22809.png" src="../_images/355121a9767f64b4c00c76f2e7452302f4846dfaddfd0329315d731086a22809.png" />
+</div>
+</div>
+<p>Piirakkakaavioita pidetään tieteellisesti haastavina eikä niistä saada tarkkaa tietoa datasta, joten Seabornilla ei pysty yksinään tekemään niitä. Jos kuitenkin halutaan luoda sellainen Matplotlibin (tämä on löydyttävä koodista import matplotlib.pyplot as plt) avulla tehtynä se näyttäisi seuraavalta. Huomaathan, että kuvion värit muuttuvat hieman kun siirrtyään Seabornista Matplotlibiin.
+Haluttiin myyntien prosenttiosuus näkyviin kokonaislukuna (0 desimaalia(f)) ja koodi autopct=’%1.0f%%’tekee sen. Tämä toimii vain piirakkakaaviossa, muuten koodi olisi samanlainen kuin edellisen kuvaajan esimerkissä, koodilla FuncFormatter.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">area_value</span> <span class="o">=</span> <span class="n">df_sales</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;area&quot;</span><span class="p">)[</span><span class="s2">&quot;net_value&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">pie</span><span class="p">(</span>
+    <span class="n">area_value</span><span class="p">,</span>
+    <span class="n">labels</span><span class="o">=</span><span class="n">area_value</span><span class="o">.</span><span class="n">index</span><span class="p">,</span>
+    <span class="n">autopct</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%1.0f%%</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/ca6fe1597a050cc9d4f928701baeac748031bbf7d604f26e81feac2678b4321f.png" src="../_images/ca6fe1597a050cc9d4f928701baeac748031bbf7d604f26e81feac2678b4321f.png" />
+</div>
+</div>
+</section>
+<section id="relaatiokaaviot">
+<h2>Relaatiokaaviot<a class="headerlink" href="#relaatiokaaviot" title="Link to this heading">#</a></h2>
+<p>Relplot() koodilla voi tehdä hajonta- tai viivakaavioita. Hajontakaavio on koodin vakiotyyppi ja viivakaavion saat lisäämällä koodin kind=line. Yksittäisiä kuvaajia voi tehdä myös koodeilla scatterplot() ja lineplot(), mutta vaativampaan työhön relplot() käyttö on parempi vaihtoehto.</p>
+<section id="hajontakaavio">
+<h3>Hajontakaavio<a class="headerlink" href="#hajontakaavio" title="Link to this heading">#</a></h3>
+<p>Hajontakaavion tietopisteitä voit muokata komennoilla hue, style ja size. Hue antaa eri värit eri kategorioille. Style muuttaa tietopisteen muotoa, tässä 6 eri muuttujaa on maksimi. Koko muuttaa pisteiden kokoa datassa esiintyvyyden perusteella. Style ja size komentoja tulee käyttää harkitusti, koska ne saattavat tehdä kuvaajasta epäselvän.</p>
+<p>Seuraavassa kuvataan eri alueiden tilausten kokoa ja arvoa. Ensimmäisessä kuvaajassa kaikki alueet ovat samassa kuvaajassa, alueet voidaan erottaa omille kuvaajilleen koodilla col=”area”. Col tarkoittaa column eli sarake, joten kannattaa tarkistaa, että valittu muuttuja ei sisällä liian montaa erilaista arvoa. Toiseen kuvaajaan muokattiin myös tietopisteet erilaisiksi koodilla style=”muuttuja”.</p>
+<p>Ensimmäinen kuvaaja voidaan toteuttaa myös koodilla:
+sns.scatterplot(data=df_sales, x=”quantity”, y=”net_value”, hue=”area”)
+plt.show()
+Scatterplot ei suoraan tue koodia col=, joten toinen usean kuvaajan kaavio on monimutkaisempi toteuttaa ilman relplotin käyttöä.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">relplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">df_sales</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;quantity&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;net_value&quot;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s2">&quot;area&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/3b3792f5cca9a2c8a3126fdf5a58750a1a66f9a8c144cba8af41d72cd6af472c.png" src="../_images/3b3792f5cca9a2c8a3126fdf5a58750a1a66f9a8c144cba8af41d72cd6af472c.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">relplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">df_sales</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;quantity&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;net_value&quot;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s2">&quot;area&quot;</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s2">&quot;area&quot;</span><span class="p">,</span> <span class="n">col</span> <span class="o">=</span><span class="s2">&quot;area&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/335ba16d0ed60822a1c9c66488b0ed3589b709560a0b76eae292953ba94c2f22.png" src="../_images/335ba16d0ed60822a1c9c66488b0ed3589b709560a0b76eae292953ba94c2f22.png" />
+</div>
+</div>
+</section>
+<section id="viivakaavio">
+<h3>Viivakaavio<a class="headerlink" href="#viivakaavio" title="Link to this heading">#</a></h3>
+<p>Viivakuviolla kuvataan usein muuttujan kehitystä ajan kuluessa, mutta x-akselilla voidaan käyttää myös muita muuttujia, kunhan niillä on looginen tai numeerinen järjestys. Seuraavassa kuvataan myynnin keskiarvon kehitystä, x-akselilla oleva ajan selite käännettiin vinoon, jotta tekstit näkyvät selkeämmin.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">relplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">df_sales</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;sim_calendar_date&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;net_value&quot;</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s2">&quot;line&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">rotation</span><span class="o">=</span><span class="mi">45</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/30d864e6df2ab7def063a3b2d182170b8e018bd099349d33a400b6dc5987cd2b.png" src="../_images/30d864e6df2ab7def063a3b2d182170b8e018bd099349d33a400b6dc5987cd2b.png" />
+</div>
+</div>
+<p>Seaborn lisää kuvaajaan automaattisesti 95% luottamusvälin varjon, jonka voi poistaa koodilla errorbar=None. Koodi errorbar=”sd” kuvaa hajontaa eli arvojen vaihtelun määrää keskiarvosta. Myös viivakaaviota voi muokata komennoilla hue, style ja size.
+Kuvaajaa voidaan muokata myös orient=”y” komennolla, joka piirtää kuvaajan y-akselin suuntaisena, jolloin tutkittava muuttuja on x-akselilla ja aika y-akselilla. Seuraavasta kuvaajasta voidaan tarkastella myynnin kehitystä ilman luottamusvälin varjostusta.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">relplot</span><span class="p">(</span>
+    <span class="n">data</span><span class="o">=</span><span class="n">df_sales</span><span class="p">,</span>
+    <span class="n">x</span><span class="o">=</span><span class="s2">&quot;net_value&quot;</span><span class="p">,</span><span class="n">y</span><span class="o">=</span><span class="s2">&quot;sim_calendar_date&quot;</span><span class="p">,</span>
+    <span class="n">kind</span><span class="o">=</span><span class="s2">&quot;line&quot;</span><span class="p">,</span>  <span class="n">orient</span><span class="o">=</span><span class="s2">&quot;y&quot;</span><span class="p">,</span>
+    <span class="n">errorbar</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/c5fdee4fca84c29755930259dc2fb38d60c5dedbe9aad4aa4ca51650fd8f64c2.png" src="../_images/c5fdee4fca84c29755930259dc2fb38d60c5dedbe9aad4aa4ca51650fd8f64c2.png" />
+</div>
+</div>
+<p>Myös viivakaavioon saadaan useita kuvaajia koodilla col=. Jos halutaan muokata kuvaajien määrää riveillä käytetään koodia col_wrap=”rivien määrä, jolle kuvaajat piirtyy”(col_wrap=3). Height muuttaa kuvaajien korkeutta ja aspect leveyttä korkeuden suhteen. Tässä on kuvattu eri makujen ja pakkauskoon myyntikatteen kehitystä ajallisesti.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">relplot</span><span class="p">(</span>
+    <span class="n">data</span><span class="o">=</span><span class="n">df_sales</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s2">&quot;line&quot;</span><span class="p">,</span>
+    <span class="n">x</span><span class="o">=</span><span class="s2">&quot;sim_calendar_date&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;contribution_margin_pct&quot;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s2">&quot;material_size&quot;</span><span class="p">,</span>
+    <span class="n">col</span><span class="o">=</span><span class="s2">&quot;material_label&quot;</span><span class="p">,</span> <span class="n">col_wrap</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
+    <span class="n">height</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">aspect</span><span class="o">=</span><span class="mf">1.5</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/cbb828d6f44b4d20f5e10d9fb9e1a0877943cf0700ae33aa6350392757b62484.png" src="../_images/cbb828d6f44b4d20f5e10d9fb9e1a0877943cf0700ae33aa6350392757b62484.png" />
+</div>
+</div>
+</section>
+</section>
+<section id="kategoriset-kaaviot">
+<h2>Kategoriset kaaviot<a class="headerlink" href="#kategoriset-kaaviot" title="Link to this heading">#</a></h2>
+<p>Catplot() on Seabornissa kategoristen kuvaajien koodi ja sitä voidaan muokata koodilla kind=”haluttu kuvaaja”. Myös koodit kuten stripplot() toimivat, mutta catplot() on tarkoitettu juuri kategorioiden kuvaamiseen, joten se on monipuolisempi ja selkeämpi tähän tarkoitukseen. Catplotilla voi tehdä seuraavia kuvaajia kategorisesta datasta: pistekaaviot, jakaumat ja arviokaaviot. Oletusasetuksena siinä on stripplot jos kind= koodilla ei muuteta tyyppiä toiseksi.</p>
+<section id="pistekaaviot">
+<h3>Pistekaaviot<a class="headerlink" href="#pistekaaviot" title="Link to this heading">#</a></h3>
+<p>Stripplot on kuin scatterplot, mutta koska x-akselin arvot ovat kategorioita kaikki arvopisteet jäävät tietyn kategorian kohdalle kuvaajassa. Seuraaviin kuvaajiin käytetään datan Marketing_Expenses välilehteä, jonka sarakeotsikot muutettiin pieneksi kirjoitukseksi. Tässä verrataan markkinointikustannusten alueellisia eroja.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_marketing</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_excel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;C:\Users\mirka\Downloads\odata_extraction.xlsx&#39;</span><span class="p">,</span> <span class="n">sheet_name</span><span class="o">=</span><span class="s2">&quot;Marketing_Expenses&quot;</span><span class="p">)</span>
+<span class="n">df_marketing</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="n">df_marketing</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+
+<span class="n">sns</span><span class="o">.</span><span class="n">catplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">df_marketing</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;area&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;amount&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/5420fe9064c77a4f8e6c720cf8c2b64ab2cb1863f467f4092506554aa00ed980.png" src="../_images/5420fe9064c77a4f8e6c720cf8c2b64ab2cb1863f467f4092506554aa00ed980.png" />
+</div>
+</div>
+<p>Stripplot asettaa arvopisteet lomittain antamaan paremman kuvan arvojen jakaumasta. Jitter=False -komento muodostaa viivamaisen kuvion pinoamalla datapisteet vain yhdeksi viivaksi, jolloin jakaumaa ei enää ilmene.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">catplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">df_marketing</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;area&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;amount&quot;</span><span class="p">,</span> <span class="n">jitter</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/15ecefb038474f2d4685db3ca9f1c767a5c3c956b025022ca072e4f9fc66ff1b.png" src="../_images/15ecefb038474f2d4685db3ca9f1c767a5c3c956b025022ca072e4f9fc66ff1b.png" />
+</div>
+</div>
+<p>Swarmplot on kuin stripplot, mutta se näyttää kaikki datassa olevat arvopisteet, ei pinoa samoja päällekkäin. Swarmplot toimii vain jos datapisteitä on vähän. Swarmplotin avulla data-arvojen poikkeuksia ja jakaumia on helppo huomata. Tässä datasta saatiin pieni otos lisäämällä koodi sample(satunnaisesti valittavien rivien määrä). Jos sample koodi ajetaan uudestaan, se etsii uudet sattumanvaraiset arvopisteet, joten kuvaaja muuttuu joka ajon jälkeen. Seuraava kuvaaja esittää myyntikatteen jakautumista alueittain asiakastyypin mukaan, 10= hypermarketit, 12= kauppaketjut ja 14= itsenäiset kaupat.
+Kategorisen muuttujan voi myös laittaa y-akselille, jolloin kuvaaja muuttuu vaakasuoraksi. Tämä toimii parhaiten jos kategorioilla on pitkiä nimiä tai niitä on paljon.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">catplot</span><span class="p">(</span>
+    <span class="n">data</span><span class="o">=</span><span class="n">df_sales</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">300</span><span class="p">),</span>
+    <span class="n">x</span><span class="o">=</span><span class="s2">&quot;area&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;contribution_margin_pct&quot;</span><span class="p">,</span>
+    <span class="n">hue</span><span class="o">=</span><span class="s2">&quot;distribution_channel&quot;</span><span class="p">,</span>
+    <span class="n">kind</span><span class="o">=</span><span class="s2">&quot;swarm&quot;</span><span class="p">,)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/1ac3fa8de214b32933d755f0c10a8ce1883d385a04d59f1b754e31dd48207dfd.png" src="../_images/1ac3fa8de214b32933d755f0c10a8ce1883d385a04d59f1b754e31dd48207dfd.png" />
+</div>
+</div>
+</section>
+<section id="jakaumakaaviot">
+<h3>Jakaumakaaviot<a class="headerlink" href="#jakaumakaaviot" title="Link to this heading">#</a></h3>
+<p>Datassa olevien arvojen jakaumien kuvaukseen sopii erityisen hyvin boxplot, boxenplot tai violinplot.</p>
+<p>Boxplotissa arvoja kuvaavat laatikot sisältävät viivan, joka on arvojen mediaani eli keskimmäinen arvo. Puolet datan arvoista sijoittuu laatikon sisään (keskimmäiset 50%), määrittäen sen koon. Laatikosta lähtevät viiksiksi kutsutut viivat kuvaavat missä suurimmat ja pienimmät arvot sijaitsevat, näiden arvojen ulkopuolella olevat yksittäiset ääripäiden arvot on kuvattu vielä erillisellä pisteellä. Seuraava kuvaaja kertoo mitä pakkauskokoja eri asiakastyypit ostavat.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">catplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">df_sales</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;distribution_channel&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;quantity&quot;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s2">&quot;material_size&quot;</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s2">&quot;box&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/b51d9a127df93328206ed23989372e072d007e941eeb453798687e800d204a07.png" src="../_images/b51d9a127df93328206ed23989372e072d007e941eeb453798687e800d204a07.png" />
+</div>
+</div>
+<p>Boxenplot on samantyylinen kuvaaja kuin boxplot, mutta se keskittyy jakauman muotoon ja hyvä kuvaamaan erityisen suuria datamääriä. Tässä kuvaajassa esitettynä markkinointiin käytettyä rahaa. Haluttiin tarkastella vain muutamaa eri organisaatiota, joten sales_organization-sarake suodatettiin (filtered=) sisältämään vain valitut ryhmät CC, DD, KK ja LL.</p>
+<div class="cell tag_remove-output docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_filtered</span> <span class="o">=</span> <span class="n">df_marketing</span><span class="p">[</span><span class="n">df_marketing</span><span class="p">[</span><span class="s2">&quot;sales_organization&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">([</span><span class="s2">&quot;CC&quot;</span><span class="p">,</span> <span class="s2">&quot;DD&quot;</span><span class="p">,</span> <span class="s2">&quot;KK&quot;</span><span class="p">,</span> <span class="s2">&quot;LL&quot;</span><span class="p">])]</span>
+
+<span class="n">sns</span><span class="o">.</span><span class="n">catplot</span><span class="p">(</span> <span class="n">data</span><span class="o">=</span><span class="n">df_filtered</span><span class="p">,</span> 
+            <span class="n">x</span><span class="o">=</span><span class="s2">&quot;sales_organization&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;amount&quot;</span><span class="p">,</span>
+            <span class="n">kind</span><span class="o">=</span><span class="s2">&quot;boxen&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<img alt="../_images/0b8a1aa7f1bfd3a92a18e347469fbd2e4a1ab2981284ef6b371b75bc33f0a895.png" src="../_images/0b8a1aa7f1bfd3a92a18e347469fbd2e4a1ab2981284ef6b371b75bc33f0a895.png" />
+</div>
+</div>
+<p>Violinplot yhdistää boxplotin tapaisen jakaumien vertailun ja tiheyttä kuvaavan KDE-arvion. Kuvaajaan suodatettiin Sales-välilehdeltä vertailuun haluttujen kaupunkien myyntien jakaumat asiakastyypin mukaan. Kuvio voidaan jakaa split=True komennolla, jolloin viulu kuvaa kahta tekijää, jäljempänä olevassa kuvaajassa pakkauskoon myynnin jakaumaa valituissa kaupungeissa.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_filteredcity</span> <span class="o">=</span> <span class="n">df_sales</span><span class="p">[</span><span class="n">df_sales</span><span class="p">[</span><span class="s2">&quot;city&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">([</span><span class="s2">&quot;BERLIN&quot;</span><span class="p">,</span> <span class="s2">&quot;HAMBURG&quot;</span><span class="p">,</span> <span class="s2">&quot;MÜNCHEN&quot;</span><span class="p">])]</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">catplot</span><span class="p">(</span>
+    <span class="n">data</span><span class="o">=</span><span class="n">df_filteredcity</span><span class="p">,</span>
+    <span class="n">x</span><span class="o">=</span><span class="s2">&quot;city&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;net_value&quot;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s2">&quot;distribution_channel&quot;</span><span class="p">,</span>
+    <span class="n">kind</span><span class="o">=</span><span class="s2">&quot;violin&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/30f2c8e7a49e7f883e3ac3482d47dca472fdfa26ad64f086facda175119a9699.png" src="../_images/30f2c8e7a49e7f883e3ac3482d47dca472fdfa26ad64f086facda175119a9699.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">catplot</span><span class="p">(</span>
+    <span class="n">data</span><span class="o">=</span><span class="n">df_filteredcity</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;city&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;net_value&quot;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s2">&quot;material_size&quot;</span><span class="p">,</span>
+    <span class="n">kind</span><span class="o">=</span><span class="s2">&quot;violin&quot;</span><span class="p">,</span> <span class="n">split</span><span class="o">=</span><span class="kc">True</span><span class="p">,)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/a4dc1d56e7f981218d69023eb54f85ee99f35a96dbaab5befddc5adc11486925.png" src="../_images/a4dc1d56e7f981218d69023eb54f85ee99f35a96dbaab5befddc5adc11486925.png" />
+</div>
+</div>
+</section>
+<section id="arviokaaviot">
+<h3>Arviokaaviot<a class="headerlink" href="#arviokaaviot" title="Link to this heading">#</a></h3>
+<p>Jos halutaan tutkia aineiston eri kategorioiden määriä käytetään countplotia, tai keskiarvoja barplotilla tai pointplotilla. Kuvaajat käyttävät vakiona arvojen keskiarvoa, paitsi countplot joka summaa tietopisteet. Lisäämällä koodiin estimator= voit muuttaa sen esimerkiksi mediaaniksi tai moodiksi. Kuvaajissa arvopisteistä lähtevät viivat kuvaavat 95% luottamusväliä, tämän voit poistaa koodilla errorbar=None.</p>
+<p>Coutplotilla voidaan helposti tutkia eri ryhmissä esiintyvien havaintojen määrää datassa. Tuotiin työkirjaan välilehti Purchase_Orders samalla tavalla kuin aiemmin ja sarake otsikot muutettiin pienellä kirjoitetuksi. Countplotin suuntaa voi muuttaa kirjaamalla muuttujan joko x- tai y-akselille, tässä käytettiin y-akselia, jotta ryhmien nimet ovat selkeämmin luettavissa. Esimerkki kuvaa kuinka paljon eri materiaaleja on ostettu.</p>
+<div class="cell tag_remove-output docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_purchases</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_excel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;C:\Users\mirka\Downloads\odata_extraction.xlsx&#39;</span><span class="p">,</span> <span class="n">sheet_name</span><span class="o">=</span><span class="s2">&quot;Purchase_Orders&quot;</span><span class="p">)</span>
+<span class="n">df_purchases</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="n">df_purchases</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+
+<span class="n">sns</span><span class="o">.</span><span class="n">catplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">df_purchases</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;material_description&quot;</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s2">&quot;count&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<img alt="../_images/70cafc436f8dff6299d1eff242ac459bc7bf3f2278d39e299be72cb2d4adee58.png" src="../_images/70cafc436f8dff6299d1eff242ac459bc7bf3f2278d39e299be72cb2d4adee58.png" />
+</div>
+</div>
+<p>Mediaanilla voidaan tarkastella eri ryhmien (company_code) yleisiä tilausmääriä eri toimittajilta, hue= komento antaa toimittajille eriväriset palkit. Luottamusväliviiva kuvaa, minne mediaani todennäköisesti sijoittuu. Kuviosta haluttiin selkeämpi, joten sitä levennettiin koko koodeilla height ja aspect.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">catplot</span><span class="p">(</span>
+    <span class="n">data</span><span class="o">=</span><span class="n">df_purchases</span><span class="p">,</span>
+    <span class="n">x</span><span class="o">=</span><span class="s2">&quot;company_code&quot;</span><span class="p">,</span>
+    <span class="n">y</span><span class="o">=</span><span class="s2">&quot;quantity&quot;</span>  <span class="p">,</span>
+    <span class="n">hue</span><span class="o">=</span><span class="s2">&quot;vendor&quot;</span>                               <span class="p">,</span>
+    <span class="n">kind</span><span class="o">=</span><span class="s2">&quot;bar&quot;</span><span class="p">,</span>
+    <span class="n">estimator</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">median</span><span class="p">,</span>
+    <span class="n">height</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+    <span class="n">aspect</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/1129b353c48fdef694de29df40839fed5ee1992cdacbf1bb55bb4918fa8fe21b.png" src="../_images/1129b353c48fdef694de29df40839fed5ee1992cdacbf1bb55bb4918fa8fe21b.png" />
+</div>
+</div>
+<p>Pointplotissa keskiarvoa (tai muuta valittua laskennallista arvoa) kuvaavat pisteet yhdistyvät viivoilla, joka auttaa näkemään erot pisteiden välillä, viivoja voi muokata linestyles= komennolla yleisimmät tyylit ovat “-”, “–”, “-.” ja “:”. Visualisointi kuvaa keskimääräistä myyntihintaa eri asiakkaille alueittain jaettuna.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">catplot</span><span class="p">(</span>
+    <span class="n">data</span><span class="o">=</span><span class="n">df_sales</span><span class="p">,</span>
+    <span class="n">x</span><span class="o">=</span><span class="s2">&quot;distribution_channel&quot;</span><span class="p">,</span>
+    <span class="n">y</span><span class="o">=</span><span class="s2">&quot;net_price&quot;</span><span class="p">,</span>
+    <span class="n">hue</span><span class="o">=</span> <span class="s2">&quot;area&quot;</span><span class="p">,</span>
+    <span class="n">kind</span><span class="o">=</span><span class="s2">&quot;point&quot;</span><span class="p">,</span>
+    <span class="n">linestyles</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;-&quot;</span><span class="p">,</span> <span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="s2">&quot;:&quot;</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/4f024c0c28ed415002030b175a99790ebb8bb9c7640e959b778ea01619f1c52c.png" src="../_images/4f024c0c28ed415002030b175a99790ebb8bb9c7640e959b778ea01619f1c52c.png" />
+</div>
+</div>
+<p>Catplotin avulla voidaan myös muodostaa vierekkäisiä kuvaajia col=-komennolla. Tässä käytettiin sen sijaan komentoa row=, jotta kuvaajat saatiin pinottua päällekkäin. Datalle tehtiin laskennallinen filteröinti, jolla etsittiin 3 suurinta myyntikatetta tekevää ryhmää. Näiden ryhmien markkinointikulujen kokonaissummaa (estimator=sum, muuten kuvaa keskiarvoa) verrataan kuvaajassa alueittain.</p>
+<div class="cell tag_remove-output docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">top3_orgs</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">df_sales</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;sales_organization&quot;</span><span class="p">)[</span><span class="s2">&quot;contribution_margin&quot;</span><span class="p">]</span>
+    <span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+    <span class="o">.</span><span class="n">nlargest</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">index</span><span class="p">)</span>
+
+<span class="n">df_filteredtop</span> <span class="o">=</span> <span class="n">df_marketing</span><span class="p">[</span><span class="n">df_marketing</span><span class="p">[</span><span class="s2">&quot;sales_organization&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">top3_orgs</span><span class="p">)]</span>
+
+<span class="n">sns</span><span class="o">.</span><span class="n">catplot</span><span class="p">(</span>
+    <span class="n">data</span><span class="o">=</span><span class="n">df_filteredtop</span><span class="p">,</span>
+    <span class="n">x</span><span class="o">=</span><span class="s2">&quot;amount&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;sales_organization&quot;</span><span class="p">,</span>
+    <span class="n">row</span><span class="o">=</span><span class="s2">&quot;area&quot;</span><span class="p">,</span>
+    <span class="n">kind</span><span class="o">=</span><span class="s2">&quot;bar&quot;</span><span class="p">,</span>
+    <span class="n">errorbar</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">height</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+    <span class="n">aspect</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+    <span class="n">estimator</span><span class="o">=</span><span class="nb">sum</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<img alt="../_images/3e26c4cc9480547e1083b92bf6f3654c62650ef4116cbb5eafb11ff07bc5d234.png" src="../_images/3e26c4cc9480547e1083b92bf6f3654c62650ef4116cbb5eafb11ff07bc5d234.png" />
+</div>
+</div>
+</section>
+</section>
+<section id="jakaumien-visualisointi">
+<h2>Jakaumien visualisointi<a class="headerlink" href="#jakaumien-visualisointi" title="Link to this heading">#</a></h2>
+<p>Jakauma visualisoinneilla voidaan analysoida datan jakaumia, keskittyvyyttä ja poikkeumien esiintyvyyttä. Jakaumia kuvataan koodilla displot(), mutta myös jointplot() ja pairplot() kuuluvat tähän kategoriaan.  Jakaumia voidaan kuvata kuvaajilla: histplot(), joka on koodin oletusasetus, kdeplot(), ecdfplot(), ja rugplot().</p>
+<section id="histogrammi">
+<h3>Histogrammi<a class="headerlink" href="#histogrammi" title="Link to this heading">#</a></h3>
+<p>Histogrammin pylväiden leveyttä voi muokata komennolla binwidth=. Bins= tekee valitun määrän pylväitä kun bins=[] voit valita mistä arvoista pylväät muodostuu, jolloin niiden väliin muodostuu välit. Shrink= luo myös välit pylväiden väliin pienentämällä niitä. Lisäämällä koodiin kde=True saat kuvaajaan jakaumaa korostavan viivan. Esimerkki kuvaa myytyjen tuotteiden hinnan jakaumaa.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">displot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">df_sales</span><span class="p">,</span>
+            <span class="n">x</span><span class="o">=</span><span class="s2">&quot;net_price&quot;</span><span class="p">,</span> <span class="n">binwidth</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+            <span class="n">shrink</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span>
+           <span class="n">kde</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>   
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/b299ef56371d82bbb9d377fc18c46df99af5912ab0c5c9b9935d24aa6659a9a6.png" src="../_images/b299ef56371d82bbb9d377fc18c46df99af5912ab0c5c9b9935d24aa6659a9a6.png" />
+</div>
+</div>
+<p>Histogrammia voidaan muokata hue= komennolla. Jos näin luodut värierot eivät ole selkeitä, komennot element=”step” ja multiple=”stack”, “fill” tai “dodge” saattavat auttaa.  Col= tai row= muodostaa usean kuvaajan visualisoinnin. Esimerkissä tarkastellaan tilausten koko luokkaa alueittain, eri asiakastyypit omissa kuvaajissaan.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">displot</span><span class="p">(</span>
+    <span class="n">data</span><span class="o">=</span><span class="n">df_sales</span><span class="p">,</span>
+    <span class="n">x</span><span class="o">=</span><span class="s2">&quot;net_value&quot;</span><span class="p">,</span>
+    <span class="n">hue</span><span class="o">=</span><span class="s2">&quot;area&quot;</span><span class="p">,</span>
+    <span class="n">col</span><span class="o">=</span><span class="s2">&quot;distribution_channel&quot;</span><span class="p">,</span>
+    <span class="n">multiple</span><span class="o">=</span><span class="s2">&quot;stack&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/dbb38fec59d4ea7c95ee4f25b4639732cd1ea56e48881dc236b3c02c86b17c03.png" src="../_images/dbb38fec59d4ea7c95ee4f25b4639732cd1ea56e48881dc236b3c02c86b17c03.png" />
+</div>
+</div>
+</section>
+<section id="tiheyskayra">
+<h3>Tiheyskäyrä<a class="headerlink" href="#tiheyskayra" title="Link to this heading">#</a></h3>
+<p>Displot voidaan luoda myös pelkkänä tiheyskäyränä lisäämällä kind=kde koodiin. Käyrät saadaan päällekkäin koodilla multiple=”stack” ja viivanalapuolen alueen väritettyä koodilla fill=True. Tässä kuvataan asiakasryhmien tilausten myyntikatteiden jakaumaa.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">displot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">df_sales</span><span class="p">,</span>
+            <span class="n">x</span><span class="o">=</span><span class="s2">&quot;contribution_margin&quot;</span><span class="p">,</span>
+            <span class="n">hue</span><span class="o">=</span><span class="s2">&quot;distribution_channel&quot;</span><span class="p">,</span>
+            <span class="n">kind</span><span class="o">=</span><span class="s2">&quot;kde&quot;</span><span class="p">,</span>
+            <span class="n">fill</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/b2eaf17d9b6e8d14cdc01b5edffe168fcba390d3bb294cb66dde5444ee883cab.png" src="../_images/b2eaf17d9b6e8d14cdc01b5edffe168fcba390d3bb294cb66dde5444ee883cab.png" />
+</div>
+</div>
+</section>
+<section id="kahden-muuttujan-jakauma">
+<h3>Kahden muuttujan jakauma<a class="headerlink" href="#kahden-muuttujan-jakauma" title="Link to this heading">#</a></h3>
+<p>Kahdella muuttujalla voi luoda ruudukkomaisen histogrammin tai koodilla kind=”kde” tiheyskäyrävisualisoinnin. Ruudukkokuvaajaa voi muokata käskyillä: hue= määrittämällä kategoriat, binwidth=(leveys,korkeus) ja lisäämällä väriselitteen kuvaajan viereen cbar=True, binwidth= lukuun ottamatta samat komennot toimivat tiheyskäyräkuvaajassa. Ensimmäisessä kuvaajassa nähdään jakauma myyntituoton ja tuotehinnan välillä. Värin tummuus kuvaa esiintymisen tiheyttä. Toisessa kuvaajassa myyntituoton ja tilausten arvon jakaumat asiakastyypin mukaan tiheyskäyrille piirrettynä.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">displot</span><span class="p">(</span><span class="n">df_sales</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;net_price&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;contribution_margin&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/294a72301fc57d5f840d7d7da9d8f04d881d28739d393cada2664459d113c885.png" src="../_images/294a72301fc57d5f840d7d7da9d8f04d881d28739d393cada2664459d113c885.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">displot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">df_sales</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;net_value&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;contribution_margin&quot;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s2">&quot;distribution_channel&quot;</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s2">&quot;kde&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/991b68710fd9cfd894ad1c64f996e23b36c565578ced8fcaa97a1c7cd10eae81.png" src="../_images/991b68710fd9cfd894ad1c64f996e23b36c565578ced8fcaa97a1c7cd10eae81.png" />
+</div>
+</div>
+</section>
+<section id="jointplot-ja-pairplot">
+<h3>Jointplot ja pairplot<a class="headerlink" href="#jointplot-ja-pairplot" title="Link to this heading">#</a></h3>
+<p>Kahta muuttujaa voi tarkastella samanaikaisesti jointplotilla. Se piirtää muuttujien suhteesta hajontakaavion ja molemman muuttujan jakauman kuvion reunoille. Jointplot tukee kind= muotoilua tyypeille: scatter (jos ei muuta määritetä), kde (tässä myös reunoilla käyrät, kaikissa muissa histogrammit), hist, hex (kuusikolmio) ja reg (scatterplot ja regressiosuora). Esimerkkiin on yhdistetty datan markkinointi ja myynti -välilehdet ja se kuvaa markkinointikulujen vaikutusta myyntikatteeseen.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_merge</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">df_sales</span><span class="p">,</span> <span class="n">df_marketing</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="s2">&quot;material_number&quot;</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s2">&quot;inner&quot;</span><span class="p">)</span>
+
+<span class="n">sns</span><span class="o">.</span><span class="n">jointplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">df_merge</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;amount&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;contribution_margin_pct&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/5bd09f2f55b96badec96be564c2ccbdf5a9787f687bcecae556f7363c37b2f5a.png" src="../_images/5bd09f2f55b96badec96be564c2ccbdf5a9787f687bcecae556f7363c37b2f5a.png" />
+</div>
+</div>
+<p>Tuotiin datan Company_Valuation -välilehti mukaan ja sarakeotsikot muutettiin pienellä kirjoitetuksi. Luotiin uusi taulu df_merge_val_sales, johon yhdistettiin sarakkeita sekä sales että valuation -välilehdiltä. Ajamalla df_merge_val_sales tulostuu taulukon rakenne.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_valuation</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_excel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;C:\Users\mirka\Downloads\odata_extraction.xlsx&#39;</span><span class="p">,</span> <span class="n">sheet_name</span><span class="o">=</span><span class="s2">&quot;Company_Valuation&quot;</span><span class="p">)</span>
+<span class="n">df_valuation</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="n">df_valuation</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+
+<span class="n">df_merge_val_sales</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span>
+    <span class="n">df_valuation</span><span class="p">[[</span><span class="s2">&quot;company_code&quot;</span><span class="p">,</span> <span class="s2">&quot;setup_time_investment&quot;</span><span class="p">]],</span>
+    <span class="n">df_sales</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;sales_organization&quot;</span><span class="p">)[[</span><span class="s2">&quot;net_value&quot;</span><span class="p">,</span> <span class="s2">&quot;contribution_margin&quot;</span><span class="p">]]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(),</span>
+    <span class="n">left_on</span><span class="o">=</span><span class="s2">&quot;company_code&quot;</span><span class="p">,</span> <span class="n">right_on</span><span class="o">=</span><span class="s2">&quot;sales_organization&quot;</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s2">&quot;inner&quot;</span><span class="p">)</span>
+
+<span class="n">df_merge_val_sales</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>company_code</th>
+      <th>setup_time_investment</th>
+      <th>sales_organization</th>
+      <th>net_value</th>
+      <th>contribution_margin</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>DD</td>
+      <td>0</td>
+      <td>DD</td>
+      <td>10270495.48</td>
+      <td>7941220.56</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>DD</td>
+      <td>0</td>
+      <td>DD</td>
+      <td>10270495.48</td>
+      <td>7941220.56</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>DD</td>
+      <td>0</td>
+      <td>DD</td>
+      <td>10270495.48</td>
+      <td>7941220.56</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>FF</td>
+      <td>0</td>
+      <td>FF</td>
+      <td>6125285.31</td>
+      <td>4369701.07</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>FF</td>
+      <td>0</td>
+      <td>FF</td>
+      <td>6125285.31</td>
+      <td>4369701.07</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>1115</th>
+      <td>SS</td>
+      <td>125000</td>
+      <td>SS</td>
+      <td>8533506.60</td>
+      <td>6694241.38</td>
+    </tr>
+    <tr>
+      <th>1116</th>
+      <td>SS</td>
+      <td>125000</td>
+      <td>SS</td>
+      <td>8533506.60</td>
+      <td>6694241.38</td>
+    </tr>
+    <tr>
+      <th>1117</th>
+      <td>SS</td>
+      <td>125000</td>
+      <td>SS</td>
+      <td>8533506.60</td>
+      <td>6694241.38</td>
+    </tr>
+    <tr>
+      <th>1118</th>
+      <td>SS</td>
+      <td>125000</td>
+      <td>SS</td>
+      <td>8533506.60</td>
+      <td>6694241.38</td>
+    </tr>
+    <tr>
+      <th>1119</th>
+      <td>SS</td>
+      <td>125000</td>
+      <td>SS</td>
+      <td>8533506.60</td>
+      <td>6694241.38</td>
+    </tr>
+  </tbody>
+</table>
+<p>1120 rows × 5 columns</p>
+</div></div></div>
+</div>
+<p>Pairplotilla voidaan nähdä monen muuttujan yhteyksiä toisiinsa ja se auttaa hahmottamaan suurta datamäärää yhdellä kertaa. Diagonaalille muodostuvat jakaumakuvaajien tyyliksi voi valita käyrän (diag_kind=”kde”) vakio histogrammien sijaan. Esimerkki pairplot vertaa alkuinvestoinnin, tilausten nettosumman ja myyntikatteen yhteyksiä.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">pairplot</span><span class="p">(</span>
+    <span class="n">data</span><span class="o">=</span><span class="n">df_merge_val_sales</span><span class="p">[[</span><span class="s2">&quot;setup_time_investment&quot;</span><span class="p">,</span> <span class="s2">&quot;net_value&quot;</span><span class="p">,</span> <span class="s2">&quot;contribution_margin&quot;</span><span class="p">]],</span>
+    <span class="n">diag_kind</span><span class="o">=</span><span class="s2">&quot;kde&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/a326d27657e434eea6abf0e8b4df973479aea5329ba77275b943436606b73349.png" src="../_images/a326d27657e434eea6abf0e8b4df973479aea5329ba77275b943436606b73349.png" />
+</div>
+</div>
+</section>
+</section>
+<section id="moniulotteiset-visualisoinnit">
+<h2>Moniulotteiset visualisoinnit<a class="headerlink" href="#moniulotteiset-visualisoinnit" title="Link to this heading">#</a></h2>
+<p>Moniulotteisia kaavioita käytetään kuvaamaan suurta tietomäärää yhdellä kertaa ja se toteutetaan koodeilla facetgrid ja pairgrid, molemmat tarvitsevat g.map -komennon piirtämään kaaviot. Vaikka komennoilla col= ja row= saat muokattua kuvaajia moniosaisiksi, jos haluat muokata visualisointien ulkomuotoa paljon ja tehdä monimutkaisempia kuvaajia facet- tai pairgrid on parempivaihtoehto. Facetgrid kuvaa muutaman muuttujan eroa datassa kun pairgrid kuvaa usean eri muuttuja suhdetta keskenään.</p>
+<section id="facetgrid">
+<h3>Facetgrid<a class="headerlink" href="#facetgrid" title="Link to this heading">#</a></h3>
+<p>Facetgrid koodin row määrittää rivit, col sarakkeet ja hue kuvaa väreillä esimerkiksi eri kategorioita. Esimerkissä on valittu scatterplot kuvaajaksi, mutta suurinta osaa kuvaajatyypeistä voi käyttää tässä (kde, histplot, jne.), on siis valittava kuvaajatyyppi, ei funktiota kuten displot. Seuraavaan esimerkkiin haluttiin tutkia aiemmin määriteltyjen myyntikatteen mukaan 3 parhaan tiimin voiton ja riskiprosentin yhteyttä. Datassa olevasta sim_calendar_date sarakkeesta luotiin uusi sim_month sarake, johon päivämäärät yksinkertaistuivat kuukausi muotoisiksi. Quarter on usein hyödyllinen ajanmääre liiketoiminnan datassa, päivämäärän muokkaus koodiin tulisi vain vaihtaa sarake nimi ja (“M”)-&gt;(“Q”). G.add_legend() lisää selitteen kuvion oikeaan laitaan, facetgridissa valitaan kaikki kuvaajaan haluttavat tekijät, joten se ei piirry automaattisesti kuten osassa aiemmista kuvaajista. Myös Y-akselille lisättiin viiva kuvion selkeyttämiseksi.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_valuation</span><span class="p">[</span><span class="s2">&quot;sim_month&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">df_valuation</span><span class="p">[</span><span class="s2">&quot;sim_calendar_date&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">to_period</span><span class="p">(</span><span class="s2">&quot;M&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
+
+<span class="n">df_val_top3</span> <span class="o">=</span> <span class="n">df_valuation</span><span class="p">[</span><span class="n">df_valuation</span><span class="p">[</span><span class="s2">&quot;company_code&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">top3_orgs</span><span class="p">)]</span>
+
+<span class="n">g</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">FacetGrid</span><span class="p">(</span><span class="n">df_val_top3</span><span class="p">,</span> <span class="n">col</span><span class="o">=</span><span class="s2">&quot;sim_month&quot;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s2">&quot;company_code&quot;</span><span class="p">)</span>
+<span class="n">g</span><span class="o">.</span><span class="n">map_dataframe</span><span class="p">(</span><span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;company_risk_rate_pct&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;profit&quot;</span><span class="p">)</span>
+<span class="n">g</span><span class="o">.</span><span class="n">add_legend</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">ax</span> <span class="ow">in</span> <span class="n">g</span><span class="o">.</span><span class="n">axes</span><span class="o">.</span><span class="n">flat</span><span class="p">:</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;grey&quot;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/6c194ac96f83397669bbb9fe14eab6cfa50ee7b6afb5d36bb1f57d45f668d561.png" src="../_images/6c194ac96f83397669bbb9fe14eab6cfa50ee7b6afb5d36bb1f57d45f668d561.png" />
+</div>
+</div>
+</section>
+<section id="pairgrid">
+<h3>Pairgrid<a class="headerlink" href="#pairgrid" title="Link to this heading">#</a></h3>
+<p>Pairgridiin määritellään useita muuttujia, joten se muodostaa monta kuvaajaa ilman col= tai row= käskyä. Esimerkissä on valittu muuttujiksi tilauksen kokonaisarvo, määrä, kustannukset ja myyntikate (%). Kuvaajalla voidaan tarkastella miten jokainen näistä muuttujista vaikuttaa toiseen, ja histogrammit näyttävät muuttujien esiintyvyyden jakaumat koodilla g.map_diag(sns.histplot).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">vars_to_plot</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;net_value&#39;</span><span class="p">,</span><span class="s1">&#39;quantity&#39;</span><span class="p">,</span><span class="s1">&#39;cost&#39;</span><span class="p">,</span><span class="s1">&#39;contribution_margin_pct&#39;</span><span class="p">]</span>
+
+<span class="n">g</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">PairGrid</span><span class="p">(</span><span class="n">df_sales</span><span class="p">[</span><span class="n">vars_to_plot</span><span class="p">])</span>
+<span class="n">g</span><span class="o">.</span><span class="n">map_offdiag</span><span class="p">(</span><span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">)</span>
+<span class="n">g</span><span class="o">.</span><span class="n">map_diag</span><span class="p">(</span><span class="n">sns</span><span class="o">.</span><span class="n">histplot</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/1198b7c004cc6f990b403b220cf90badec96c1600e5e3b222ca20bc08ae4214f.png" src="../_images/1198b7c004cc6f990b403b220cf90badec96c1600e5e3b222ca20bc08ae4214f.png" />
+</div>
+</div>
+</section>
+</section>
+<section id="lineaariset-regressiomallit">
+<h2>Lineaariset regressiomallit<a class="headerlink" href="#lineaariset-regressiomallit" title="Link to this heading">#</a></h2>
+<p>Lineaarisia regressiomalleja kuvataan koodeilla regplot() ja lmplot(). Edistyneempään käyttöön tarvitset statsmodels -kirjastoa, mutta Seabornella ei ole varsinaisesti tarkoitus mennä liian syvällisesti tilastolliseen analyysiin vaan sen visualisonneilla pyritään ymmärtämään dataa paremmin. Merkittävin ero regplotin ja lmplotin välillä on, että lmplot pystyy tekemään useita kuvaajia samanaikaisesti ja regplot vain yhden kerrallaan. Lmpltilla myös hue= komento toimii, regplotilla ei. Lineaarisen regression piirtämiseen tarvitaan numeraalista tietoa, joten sekä x- ja y-akselin on oltava datatyypiltään int tai float, koodilla print(df_sales.dtypes) saat listan datan sarakkeiden tyypeistä, kuten oppaan alussa tehtiin.</p>
+<p>Tässä esimerkissä hinnan ja myyntimäärien välistä suhdetta kuvataan hinnan vaikutusta myyntimäärään. Tietopisteitä on paljon, joten kuvaajan luettavuutta parannettiin lisäämällä pisteiden läpinäkyvyyttä (scatter_kws={“alpha”: 0.3}) ja vaihtamalla regressioviivan väri mustaksi (line_kws={“color”: “black”}). Regressioviivan varjo kuvaa 95% luottamusväliä, mutta tässä kuvaajassa se ei näy selkeästi datan vähäisen vaihtelun vuoksi.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">regplot</span><span class="p">(</span>
+    <span class="n">data</span><span class="o">=</span><span class="n">df_sales</span><span class="p">,</span>
+    <span class="n">x</span><span class="o">=</span><span class="s2">&quot;net_price&quot;</span><span class="p">,</span>
+    <span class="n">y</span><span class="o">=</span><span class="s2">&quot;quantity&quot;</span><span class="p">,</span>
+    <span class="n">scatter_kws</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;alpha&quot;</span><span class="p">:</span> <span class="mf">0.3</span><span class="p">},</span>
+    <span class="n">line_kws</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;color&quot;</span><span class="p">:</span> <span class="s2">&quot;black&quot;</span><span class="p">})</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/f9b2f1594362c1a0baa43bd98af59f00374e3f38fe5c59979a02b4786cd78557.png" src="../_images/f9b2f1594362c1a0baa43bd98af59f00374e3f38fe5c59979a02b4786cd78557.png" />
+</div>
+</div>
+<p>Tässä lmplot esimerkissä kuvataan myyntimäärän ja myyntihinnan suhdetta. Myynti taulusta suodatettiin eniten rahallisesti tuottavat material_labelit (mysli maut) max ja min laskun avulla omaan. Ne erottuvat kaaviossa eri värisinä (hue) ja niille piirtyy omat vaihteluvälilliset regressioviivat.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">label_totals</span> <span class="o">=</span> <span class="n">df_sales</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;material_label&quot;</span><span class="p">)[</span><span class="s2">&quot;net_value&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+
+<span class="n">max_label</span> <span class="o">=</span> <span class="n">label_totals</span><span class="o">.</span><span class="n">idxmax</span><span class="p">()</span>
+<span class="n">min_label</span> <span class="o">=</span> <span class="n">label_totals</span><span class="o">.</span><span class="n">idxmin</span><span class="p">()</span>
+
+<span class="n">filtered_df</span> <span class="o">=</span> <span class="n">df_sales</span><span class="p">[</span><span class="n">df_sales</span><span class="p">[</span><span class="s2">&quot;material_label&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">([</span><span class="n">max_label</span><span class="p">,</span> <span class="n">min_label</span><span class="p">])]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+<span class="n">filtered_df</span><span class="p">[</span><span class="s2">&quot;label_group&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">filtered_df</span><span class="p">[</span><span class="s2">&quot;material_label&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">({</span>
+    <span class="n">max_label</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;Eniten tuottava (</span><span class="si">{</span><span class="n">max_label</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">,</span>
+    <span class="n">min_label</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;Vähiten tuottava (</span><span class="si">{</span><span class="n">min_label</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">})</span>
+
+<span class="n">sns</span><span class="o">.</span><span class="n">lmplot</span><span class="p">(</span>
+    <span class="n">data</span><span class="o">=</span><span class="n">filtered_df</span><span class="p">,</span>
+    <span class="n">x</span><span class="o">=</span><span class="s2">&quot;net_price&quot;</span><span class="p">,</span>
+    <span class="n">y</span><span class="o">=</span><span class="s2">&quot;quantity&quot;</span><span class="p">,</span>
+    <span class="n">hue</span><span class="o">=</span><span class="s2">&quot;label_group&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/0c5633d8e190f08910286ef23a3f4f9782c388b59640fb98fbf8956babb46e62.png" src="../_images/0c5633d8e190f08910286ef23a3f4f9782c388b59640fb98fbf8956babb46e62.png" />
+</div>
+</div>
+<p>Col= luo myös lmplotissa vierekkäisiä kuvaajia. Tähän valittiin aiemmin filteröidyt, rahallisesti tuottavimmat, ryhmät ja verrataan niiden myyntikatteen(%) vaikutusta myyntimäärään.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_filtered_sales</span> <span class="o">=</span> <span class="n">df_sales</span><span class="p">[</span><span class="n">df_sales</span><span class="p">[</span><span class="s2">&quot;sales_organization&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">top3_orgs</span><span class="p">)]</span>
+
+<span class="n">sns</span><span class="o">.</span><span class="n">lmplot</span><span class="p">(</span>
+    <span class="n">data</span><span class="o">=</span><span class="n">df_filtered_sales</span><span class="p">,</span>
+    <span class="n">x</span><span class="o">=</span><span class="s2">&quot;contribution_margin_pct&quot;</span><span class="p">,</span>
+    <span class="n">y</span><span class="o">=</span><span class="s2">&quot;quantity&quot;</span><span class="p">,</span>
+    <span class="n">hue</span><span class="o">=</span><span class="s2">&quot;distribution_channel&quot;</span><span class="p">,</span>
+    <span class="n">col</span><span class="o">=</span><span class="s2">&quot;sales_organization&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/6ea525e7324da4e02a3737723debfc1fc220a468520dcdba0b872d6647948cbe.png" src="../_images/6ea525e7324da4e02a3737723debfc1fc220a468520dcdba0b872d6647948cbe.png" />
+</div>
+</div>
+<p>Regplotin avulla voidaan luoda monipuolisia kuvaajia. Esimerkiksi jointplotiin yhdistettynä kind=”reg” muodostaa kuvaajan, jossa näkyy lineaarinen regressiokuvio ja sen reunoilla histogrammit kuvaamassa tietopisteiden jakaumaa akselien muuttujista. Esimerkissä hajontakaavio esittää kulujen vaikutusta myyntikatteeseen. Sitä kuvataan regressioviivan sekä jakaumia kuvaavien histogrammien avulla (ylhäällä kulujen jakauma ja oikealla myyntikatteen jakauma). Visualisoinnin muuttujat, cost ja contribution margin, ovat molemmat rahamääräisiä ja niiden arvot sijoittuvat samalle alueelle. Visualisointia selkeyttämään luotiin määrittely, jolla x- ja y-akselit alkavat ja loppuvat samoissa arvoissa alin, -5000 ja ylin 50000.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">g</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">jointplot</span><span class="p">(</span>
+    <span class="n">data</span><span class="o">=</span><span class="n">df_sales</span><span class="p">,</span>
+    <span class="n">x</span><span class="o">=</span><span class="s2">&quot;cost&quot;</span><span class="p">,</span>
+    <span class="n">y</span><span class="o">=</span><span class="s2">&quot;contribution_margin&quot;</span><span class="p">,</span>
+    <span class="n">kind</span><span class="o">=</span><span class="s2">&quot;reg&quot;</span><span class="p">,</span>
+    <span class="n">scatter_kws</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;alpha&quot;</span><span class="p">:</span> <span class="mf">0.3</span><span class="p">})</span>
+
+<span class="n">g</span><span class="o">.</span><span class="n">ax_joint</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="o">-</span><span class="mi">5000</span><span class="p">,</span> <span class="mi">50000</span><span class="p">)</span>
+<span class="n">g</span><span class="o">.</span><span class="n">ax_joint</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="o">-</span><span class="mi">5000</span><span class="p">,</span> <span class="mi">50000</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/e82c0cab91a8b5f01a7a2d13cefc955643f203626826e9e96fef02abd2507828.png" src="../_images/e82c0cab91a8b5f01a7a2d13cefc955643f203626826e9e96fef02abd2507828.png" />
+</div>
+</div>
+<p>Pairplotilla voidaan esittää samanaikaisesti useiden muuttujien vaikutusta useaan muuttujaan. Ensimmäisessä visualisoinnissa on määritelty muuttuja x- ja y-akseleille ja toisessa haluttiin luoda ruudukkokuva kaikkien muuttujien suhteesta toiseen. Ensin siis kuvataan määrän, nettotilausarvon ja kulujen suhdetta myyntikateprosenttiin ja toisena näiden kaikkien suhdetta toisiinsa. Datan ollessa hyvin suuri voidaan ottaa vain osa datasta mukaan, tässä 2000 tietopistettä. Toisin kuin aiemmassa swarmplot-esimerkissä, tässä koodiin lisättiin random_state=42, jonka ansiosta valittu data on aina sama, eikä kuvaaja muutu joka kerta kun koodi ajetaan. Kuvaan piirtyy regressioviiva koodilla kind=”reg”. Diag_kind= ei ole määritelty joten toiseen kuvaajaan piirtyy histogrammin diagonaalille. Corner=True jättää kuvaajasta pois toistona muodostuvat kaaviot.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_sample</span> <span class="o">=</span> <span class="n">df_sales</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">2000</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+
+<span class="n">sns</span><span class="o">.</span><span class="n">pairplot</span><span class="p">(</span>
+    <span class="n">df_sample</span><span class="p">,</span>
+    <span class="n">x_vars</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;quantity&quot;</span><span class="p">,</span> <span class="s2">&quot;net_value&quot;</span><span class="p">,</span> <span class="s2">&quot;cost&quot;</span><span class="p">],</span>
+    <span class="n">y_vars</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;contribution_margin_pct&quot;</span><span class="p">],</span>
+    <span class="n">kind</span><span class="o">=</span><span class="s2">&quot;reg&quot;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/285f0c4f7bb06415c4e33a4dd08e0d730a7934805319922c1cc3b6a1202d21d2.png" src="../_images/285f0c4f7bb06415c4e33a4dd08e0d730a7934805319922c1cc3b6a1202d21d2.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_sample</span> <span class="o">=</span> <span class="n">df_sales</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">2000</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+
+<span class="n">sns</span><span class="o">.</span><span class="n">pairplot</span><span class="p">(</span>
+    <span class="n">df_sample</span><span class="p">[[</span><span class="s2">&quot;quantity&quot;</span><span class="p">,</span> <span class="s2">&quot;net_value&quot;</span><span class="p">,</span> <span class="s2">&quot;cost&quot;</span><span class="p">,</span> <span class="s2">&quot;contribution_margin_pct&quot;</span><span class="p">]],</span>
+    <span class="n">kind</span><span class="o">=</span><span class="s2">&quot;reg&quot;</span><span class="p">,</span>
+    <span class="n">corner</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/0340aa6c5f70717c917c0f3eb3f84bfac301e5b5c8b6f8f6e2497343b8fa726c.png" src="../_images/0340aa6c5f70717c917c0f3eb3f84bfac301e5b5c8b6f8f6e2497343b8fa726c.png" />
+</div>
+</div>
+</section>
+<section id="teemojen-ja-tyylien-mukauttaminen">
+<h2>Teemojen ja tyylien mukauttaminen<a class="headerlink" href="#teemojen-ja-tyylien-mukauttaminen" title="Link to this heading">#</a></h2>
+<p>Kaikki aiemmin luodut visualisoinnit on tehty ilman teeman tai tyylien suurempia muotoiluja. Seaborn tekee hyvin onnistuneita kuvaajia ilman erikoismuotoiluja, mutta edistyneessä käytössä muotoilut voivat tulla tarpeellisiksi.</p>
+<section id="tyyli">
+<h3>Tyyli<a class="headerlink" href="#tyyli" title="Link to this heading">#</a></h3>
+<p>Koodilla sns.set_theme() voit määrittää työkirjan ulkoasun kaikille visualisoinneille yhteisesti. Tällä koodilla koko työkirjalle määritettävä tyyli tulee lisätä koodiin heti import -käskyjen jälkeen. Työkirjasi koodi alkaisi näin, jos haluat muuttaa koko työkirjan tyyliasetuksia yhdellä kertaa:</p>
+<p>import seaborn as sns</p>
+<p>sns.set_theme(</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>style=&quot;darkgrid&quot;,
+
+context=&quot;notebook&quot;,
+
+palette=&quot;deep&quot;,
+
+font=&quot;sans-serif&quot;,
+
+font_scale=1,
+
+color_codes=True
+</pre></div>
+</div>
+<p>)</p>
+<p>Sns.set_theme() koodin kanssa kannattaa olla varovainen, erityisesti jos käytät Copilotia apuna koodin kirjoittamiseen. Jos pyydät sitä kirjoittamaan koodin muokatulla tyylillä varmista, että koodi koskee vain valittua visualisointia, ellet halua että kaikki visualisointisi saavat pyydetyt muutokset.</p>
+</section>
+<section id="style">
+<h3>Style<a class="headerlink" href="#style" title="Link to this heading">#</a></h3>
+<p>Yksittäisten visualisointien muokkauksen voi tehdä itse visualisointiin aloittamalla koodin käskyllä
+with sns.axes_style(“tähän teeman nimi”).</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span>
+<span class="n">styles</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;darkgrid&quot;</span><span class="p">,</span> <span class="s2">&quot;whitegrid&quot;</span><span class="p">,</span> <span class="s2">&quot;dark&quot;</span><span class="p">,</span> <span class="s2">&quot;white&quot;</span><span class="p">,</span> <span class="s2">&quot;ticks&quot;</span><span class="p">]</span>
+
+<span class="n">f</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">gs</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">add_gridspec</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">style</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">styles</span><span class="p">):</span>
+    <span class="k">with</span> <span class="n">sns</span><span class="o">.</span><span class="n">axes_style</span><span class="p">(</span><span class="n">style</span><span class="p">):</span>
+        <span class="n">ax</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="n">gs</span><span class="p">[</span><span class="n">i</span> <span class="o">//</span> <span class="mi">3</span><span class="p">,</span> <span class="n">i</span> <span class="o">%</span> <span class="mi">3</span><span class="p">])</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Style: </span><span class="si">{</span><span class="n">style</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">labelsize</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
+
+<span class="n">f</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="n">gs</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s2">&quot;off&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<img alt="../_images/b519e1baff2fce759ea0e811275832ce1c2cb06461d77e37892adab4c6d2dbb0.png" src="../_images/b519e1baff2fce759ea0e811275832ce1c2cb06461d77e37892adab4c6d2dbb0.png" />
+</div>
+</div>
+<p>Reunaviivoja voi muokata myös despine -koodilla. Koodi sns.despine(kuvio, sijainti=True) poistaa viivan niistä kohdista joille annetaan true tai ne voi poistaa osittain koodilla sns.despine(kuvio, trim=True).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">sns</span><span class="o">.</span><span class="n">axes_style</span><span class="p">(</span><span class="s2">&quot;white&quot;</span><span class="p">):</span>
+    <span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mf">6.8</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span> <span class="n">sharex</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">sharey</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">axes</span> <span class="o">=</span> <span class="n">axes</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
+
+    <span class="n">x</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">9</span><span class="p">]</span>
+
+    <span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">labelbottom</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">labelleft</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+    <span class="n">sns</span><span class="o">.</span><span class="n">despine</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">left</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">right</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">top</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">bottom</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">labelbottom</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">labelleft</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+    <span class="n">sns</span><span class="o">.</span><span class="n">despine</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">left</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">right</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">top</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">axes</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">labelbottom</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">labelleft</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span>
+    <span class="n">sns</span><span class="o">.</span><span class="n">despine</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="n">trim</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">axes</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">labelbottom</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">labelleft</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/f6aa04f245127ea0e14c40c9cf32dab30b33d07e4ab514e6dd18a716e63e3771.png" src="../_images/f6aa04f245127ea0e14c40c9cf32dab30b33d07e4ab514e6dd18a716e63e3771.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+<span class="n">y</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">9</span><span class="p">]</span>
+
+<span class="k">with</span> <span class="n">sns</span><span class="o">.</span><span class="n">axes_style</span><span class="p">(</span><span class="s2">&quot;white&quot;</span><span class="p">):</span>
+    <span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">11</span><span class="p">,</span> <span class="mf">2.5</span><span class="p">),</span> <span class="n">sharex</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">sharey</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">ax</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">axes</span><span class="p">):</span>
+    <span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">labelbottom</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">labelleft</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="n">sns</span><span class="o">.</span><span class="n">despine</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">left</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">right</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">top</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">bottom</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">despine</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">left</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">right</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">top</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">despine</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="n">trim</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/2f904adfcab086f9def33c37311e976f42efbfb9b60833d09c95dd29fe8f3134.png" src="../_images/2f904adfcab086f9def33c37311e976f42efbfb9b60833d09c95dd29fe8f3134.png" />
+</div>
+</div>
+<p>Seabornissa suoraan ei ole reunaviivojen muokkausta saatavilla, mutta jos työkirjaan on lisätty matplotlib (import matplotlib.pyplot as plt) sen avulla voi muokata reuna viivojen väriä (set_color), paksuutta (set_linewidth) ja tyyliä(set_linestyle).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+<span class="n">y</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">9</span><span class="p">]</span>
+
+<span class="k">with</span> <span class="n">sns</span><span class="o">.</span><span class="n">axes_style</span><span class="p">(</span><span class="s2">&quot;white&quot;</span><span class="p">):</span>
+    <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mf">3.5</span><span class="p">,</span> <span class="mf">2.5</span><span class="p">))</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;#ff7f0e&quot;</span><span class="p">)</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">spines</span><span class="p">[</span><span class="s2">&quot;bottom&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">set_color</span><span class="p">(</span><span class="s2">&quot;black&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">spines</span><span class="p">[</span><span class="s2">&quot;bottom&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">set_linewidth</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">spines</span><span class="p">[</span><span class="s2">&quot;top&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">set_color</span><span class="p">(</span><span class="s2">&quot;yellow&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">spines</span><span class="p">[</span><span class="s2">&quot;left&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">set_color</span><span class="p">(</span><span class="s2">&quot;red&quot;</span><span class="p">)</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">spines</span><span class="p">[</span><span class="s2">&quot;right&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">set_color</span><span class="p">(</span><span class="s2">&quot;blue&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">spines</span><span class="p">[</span><span class="s2">&quot;right&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">set_linestyle</span><span class="p">(</span><span class="s2">&quot;dotted&quot;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/24e77039a559b920385e94c910f7a4c542c03469d2b626f585704971ad0a63d0.png" src="../_images/24e77039a559b920385e94c910f7a4c542c03469d2b626f585704971ad0a63d0.png" />
+</div>
+</div>
+<p>Jos haluat muuttaa yksittäisten visualisointien väritystä voit tehdä tyyli muutoksia myös yksittäisiin visualisointeihin. Seuraavalla koodilla tausta muutettu mustaksi (=black) ja teksti ja ruudukko valkoisiksi. Voit käyttää tässä myös väri lyhenteitä, kuten b=sininen (blue) ja g=vihreä (green) tai HEX-värikoodeja, esim. oranssi=#ff7f0e.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">context</span><span class="p">({</span>
+    <span class="s1">&#39;axes.facecolor&#39;</span><span class="p">:</span> <span class="s1">&#39;black&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;figure.facecolor&#39;</span><span class="p">:</span> <span class="s1">&#39;black&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;axes.labelcolor&#39;</span><span class="p">:</span> <span class="s1">&#39;white&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;xtick.color&#39;</span><span class="p">:</span> <span class="s1">&#39;white&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;ytick.color&#39;</span><span class="p">:</span> <span class="s1">&#39;white&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;text.color&#39;</span><span class="p">:</span> <span class="s1">&#39;white&#39;</span>
+<span class="p">}):</span>
+    <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+    <span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="n">y</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span><span class="n">color</span><span class="o">=</span><span class="s2">&quot;yellow&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Musta&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/acab8174bc18c131dbd03940f933c94e15b04dc8779806f8c24a12a473b88b26.png" src="../_images/acab8174bc18c131dbd03940f933c94e15b04dc8779806f8c24a12a473b88b26.png" />
+</div>
+</div>
+</section>
+<section id="varipaletit">
+<h3>Väripaletit<a class="headerlink" href="#varipaletit" title="Link to this heading">#</a></h3>
+<p>Seabornissa on monia valmiiksi määriteltyjä väripaletteja. Koko työkirjaan voi asettaa vakiovärityksen koodilla sns.set_theme(…, palette=”valittu paletti”), tähän voit valita vakiovärin (deep) lisäksi muted, pastel, bright, dark, tai colorblind. Tässä kuvattuna Seabornen vakiovärit, joita se käyttää visualisonneissa ellei toisin määritetä.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">color_palette</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><svg  width="550" height="55"><rect x="0" y="0" width="55" height="55" style="fill:#1f77b4;stroke-width:2;stroke:rgb(255,255,255)"/><rect x="55" y="0" width="55" height="55" style="fill:#ff7f0e;stroke-width:2;stroke:rgb(255,255,255)"/><rect x="110" y="0" width="55" height="55" style="fill:#2ca02c;stroke-width:2;stroke:rgb(255,255,255)"/><rect x="165" y="0" width="55" height="55" style="fill:#d62728;stroke-width:2;stroke:rgb(255,255,255)"/><rect x="220" y="0" width="55" height="55" style="fill:#9467bd;stroke-width:2;stroke:rgb(255,255,255)"/><rect x="275" y="0" width="55" height="55" style="fill:#8c564b;stroke-width:2;stroke:rgb(255,255,255)"/><rect x="330" y="0" width="55" height="55" style="fill:#e377c2;stroke-width:2;stroke:rgb(255,255,255)"/><rect x="385" y="0" width="55" height="55" style="fill:#7f7f7f;stroke-width:2;stroke:rgb(255,255,255)"/><rect x="440" y="0" width="55" height="55" style="fill:#bcbd22;stroke-width:2;stroke:rgb(255,255,255)"/><rect x="495" y="0" width="55" height="55" style="fill:#17becf;stroke-width:2;stroke:rgb(255,255,255)"/></svg></div></div>
+</div>
+<section id="varipalettien-muokkaus">
+<h4>Väripalettien muokkaus<a class="headerlink" href="#varipalettien-muokkaus" title="Link to this heading">#</a></h4>
+<p>Seaborn on luotu tekemään selkeitä, valmiita visualisointeja, joita ei tarvitse tyyliltään muokata (Karl 2024). Verrattuna Matplotlibiin, jossa visualisointeja pystyy ja joutuu muokkaamaan paljon, Seabornissa ei ole yhtä laajaa valikoimaa esimerkiksi väripalettien muokkaamiseen, koska tarvetta niille ei varsinaisesti ole. Voit toki käyttää Matplotlibia apuna värien valinnassa ja muokkauksessa jos haluat persoonallisempia visualisointeja.</p>
+<p><a class="reference external" href="https://matplotlib.org/stable/users/explain/colors/colormaps.html">Täällä</a> voit tutustua Matplotlibin väripaletteihin, joista monet toimivat myös Seabornissa.
+Tai ajamalla koodin:</p>
+<p>from matplotlib import colormaps</p>
+<p>list(colormaps)</p>
+<p>koodiympäristössä saat nimilistan Matplotlibin kaikista väreistä ja voit testata niitä komennolla</p>
+<p>sns.color_palette(“paletti”).</p>
+<p>Jos haluat esimerkiksi luoda paletin Xamkin teemaväreistä, voit tehdä sen HEX-koodien avulla (Xamk).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">xamk_palette</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;#FDB92A&quot;</span><span class="p">,</span> <span class="s2">&quot;#8D8D8D&quot;</span><span class="p">,</span> <span class="s2">&quot;#000000&quot;</span><span class="p">,</span> <span class="s2">&quot;#1DBED0&quot;</span><span class="p">,</span> <span class="s2">&quot;#F16280&quot;</span><span class="p">,</span> <span class="s2">&quot;#595CA9&quot;</span><span class="p">,</span> <span class="s2">&quot;#A6CE39&quot;</span><span class="p">]</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">color_palette</span><span class="p">(</span><span class="n">xamk_palette</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><svg  width="385" height="55"><rect x="0" y="0" width="55" height="55" style="fill:#fdb92a;stroke-width:2;stroke:rgb(255,255,255)"/><rect x="55" y="0" width="55" height="55" style="fill:#8d8d8d;stroke-width:2;stroke:rgb(255,255,255)"/><rect x="110" y="0" width="55" height="55" style="fill:#000000;stroke-width:2;stroke:rgb(255,255,255)"/><rect x="165" y="0" width="55" height="55" style="fill:#1dbed0;stroke-width:2;stroke:rgb(255,255,255)"/><rect x="220" y="0" width="55" height="55" style="fill:#f16280;stroke-width:2;stroke:rgb(255,255,255)"/><rect x="275" y="0" width="55" height="55" style="fill:#595ca9;stroke-width:2;stroke:rgb(255,255,255)"/><rect x="330" y="0" width="55" height="55" style="fill:#a6ce39;stroke-width:2;stroke:rgb(255,255,255)"/></svg></div></div>
+</div>
+<p>Seuraavassa muutama esimerkki miten voit luoda liukuvan väripaletin. Light_palette luo liukuman niin, että vaalein sävy on vasemmalla ja dark_palette niin että tummin on vasemmalla. Voit vaihtaa tämän järjestyksen lisäämällä koodiin reverse=true komennon. Väreinä voit käyttää mm. HEX-koodeja, värien HTML-nimiä <a class="reference external" href="https://www.w3schools.com/colors/colors_names.asp">(löydät ne täältä)</a> tai värien perusnimiä blue, yellow jne.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">light_palette</span><span class="p">(</span><span class="s2">&quot;#FDB92A&quot;</span><span class="p">,</span> <span class="n">as_cmap</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div style="vertical-align: middle;"><strong>blend</strong> </div><div class="cmap"><img alt="blend colormap" title="blend" style="border: 1px solid #555;" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAgAAAABACAYAAABsv8+/AAAAFHRFWHRUaXRsZQBibGVuZCBjb2xvcm1hcKH0gPAAAAAadEVYdERlc2NyaXB0aW9uAGJsZW5kIGNvbG9ybWFwX6spFgAAADF0RVh0QXV0aG9yAE1hdHBsb3RsaWIgdjMuMTAuMywgaHR0cHM6Ly9tYXRwbG90bGliLm9yZ4Z6eFUAAAAzdEVYdFNvZnR3YXJlAE1hdHBsb3RsaWIgdjMuMTAuMywgaHR0cHM6Ly9tYXRwbG90bGliLm9yZyNea6EAAAGmSURBVHic7dZLTsMwAEBBwv2vioS4QFilIEKI21ph8WY2VWTL/diu3vLx/ra+fLduj7+/LrfZR/PO1hl7n+F1tuf1vvFl0jq78d28g/HReSfjt+9xui+D857e38fW+dqP0d/9mnOyGz+Zt0ze3/vnPTk+es9nnZPTeYPjh/f84HNedc8nrTN8zy8+J9Pu+cP395/v+TrpnEz/v/h7fLsXrz9WAwACBAAABAkAAAgSAAAQJAAAIEgAAECQAACAIAEAAEECAACCBAAABAkAAAgSAAAQJAAAIEgAAECQAACAIAEAAEECAACCBAAABAkAAAgSAAAQJAAAIEgAAECQAACAIAEAAEECAACCBAAABAkAAAgSAAAQJAAAIEgAAECQAACAIAEAAEECAACCBAAABAkAAAgSAAAQJAAAIEgAAECQAACAIAEAAEECAACCBAAABAkAAAgSAAAQJAAAIEgAAECQAACAIAEAAEECAACCBAAABAkAAAgSAAAQJAAAIEgAAECQAACAIAEAAEECAACCBAAABAkAAAgSAAAQJAAAIEgAAECQAACAoE+l/v1flXQPhAAAAABJRU5ErkJggg=="></div><div style="vertical-align: middle; max-width: 514px; display: flex; justify-content: space-between;"><div style="float: left;"><div title="#f3f0eeff" style="display: inline-block; width: 1em; height: 1em; margin: 0; vertical-align: middle; border: 1px solid #555; background-color: #f3f0eeff;"></div> under</div><div style="margin: 0 auto; display: inline-block;">bad <div title="#00000000" style="display: inline-block; width: 1em; height: 1em; margin: 0; vertical-align: middle; border: 1px solid #555; background-color: #00000000;"></div></div><div style="float: right;">over <div title="#fdb92aff" style="display: inline-block; width: 1em; height: 1em; margin: 0; vertical-align: middle; border: 1px solid #555; background-color: #fdb92aff;"></div></div></div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">dark_palette</span><span class="p">(</span><span class="s2">&quot;Goldenrod&quot;</span><span class="p">,</span> <span class="n">as_cmap</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div style="vertical-align: middle;"><strong>blend</strong> </div><div class="cmap"><img alt="blend colormap" title="blend" style="border: 1px solid #555;" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAgAAAABACAYAAABsv8+/AAAAFHRFWHRUaXRsZQBibGVuZCBjb2xvcm1hcKH0gPAAAAAadEVYdERlc2NyaXB0aW9uAGJsZW5kIGNvbG9ybWFwX6spFgAAADF0RVh0QXV0aG9yAE1hdHBsb3RsaWIgdjMuMTAuMywgaHR0cHM6Ly9tYXRwbG90bGliLm9yZ4Z6eFUAAAAzdEVYdFNvZnR3YXJlAE1hdHBsb3RsaWIgdjMuMTAuMywgaHR0cHM6Ly9tYXRwbG90bGliLm9yZyNea6EAAAFdSURBVHic7dYxDoJAEEBR15tQmHj/C2KDRoqNhQWE/16zgR2movjj+VjW25cxtvPzYv/8vp/N/7o/et9s3r7/9s3m7Tt633qJ/+vs+2bz9jX/h3H2fdt5338OABQIAAAIEgAAECQAACBIAABAkAAAgCABAABBAgAAggQAAAQJAAAIEgAAECQAACBIAABAkAAAgCABAABBAgAAggQAAAQJAAAIEgAAECQAACBIAABAkAAAgCABAABBAgAAggQAAAQJAAAIEgAAECQAACBIAABAkAAAgCABAABBAgAAggQAAAQJAAAIEgAAECQAACBIAABAkAAAgCABAABBAgAAggQAAAQJAAAIEgAAECQAACBIAABAkAAAgCABAABBAgAAggQAAAQJAAAIEgAAECQAACBIAABAkAAAgCABAABBAgAAggQAAAQJAAAIEgAAECQAACBIAABAkAAAgCABAABBL7YSBB71GPDUAAAAAElFTkSuQmCC"></div><div style="vertical-align: middle; max-width: 514px; display: flex; justify-content: space-between;"><div style="float: left;"><div title="#282522ff" style="display: inline-block; width: 1em; height: 1em; margin: 0; vertical-align: middle; border: 1px solid #555; background-color: #282522ff;"></div> under</div><div style="margin: 0 auto; display: inline-block;">bad <div title="#00000000" style="display: inline-block; width: 1em; height: 1em; margin: 0; vertical-align: middle; border: 1px solid #555; background-color: #00000000;"></div></div><div style="float: right;">over <div title="#daa520ff" style="display: inline-block; width: 1em; height: 1em; margin: 0; vertical-align: middle; border: 1px solid #555; background-color: #daa520ff;"></div></div></div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">dark_palette</span><span class="p">(</span><span class="s2">&quot;blue&quot;</span><span class="p">,</span><span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">as_cmap</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div style="vertical-align: middle;"><strong>blend</strong> </div><div class="cmap"><img alt="blend colormap" title="blend" style="border: 1px solid #555;" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAgAAAABACAYAAABsv8+/AAAAFHRFWHRUaXRsZQBibGVuZCBjb2xvcm1hcKH0gPAAAAAadEVYdERlc2NyaXB0aW9uAGJsZW5kIGNvbG9ybWFwX6spFgAAADF0RVh0QXV0aG9yAE1hdHBsb3RsaWIgdjMuMTAuMywgaHR0cHM6Ly9tYXRwbG90bGliLm9yZ4Z6eFUAAAAzdEVYdFNvZnR3YXJlAE1hdHBsb3RsaWIgdjMuMTAuMywgaHR0cHM6Ly9tYXRwbG90bGliLm9yZyNea6EAAAFeSURBVHic7dbLCoMwFEBB0///Zwt9UNC2JuszsxE0MeGuzti2fd8eXo/L59MYc+uO78/7vq8775tbd/zf73v+/99n39q55mIuK+eai7msnGsu5jJ37tw9b+/PAECHAACAIAEAAEECAACCBAAABAkAAAgSAAAQJAAAIEgAAECQAACAIAEAAEECAACCBAAABAkAAAgSAAAQJAAAIEgAAECQAACAIAEAAEECAACCBAAABAkAAAgSAAAQJAAAIEgAAECQAACAIAEAAEECAACCBAAABAkAAAgSAAAQJAAAIEgAAECQAACAIAEAAEECAACCBAAABAkAAAgSAAAQJAAAIEgAAECQAACAIAEAAEECAACCBAAABAkAAAgSAAAQJAAAIEgAAECQAACAIAEAAEECAACCBAAABAkAAAgSAAAQJAAAIEgAAECQAACAIAEAAEECAACCBAAABAkAAAgSAAAQdAcwhs75T2ry+wAAAABJRU5ErkJggg=="></div><div style="vertical-align: middle; max-width: 514px; display: flex; justify-content: space-between;"><div style="float: left;"><div title="#0000ffff" style="display: inline-block; width: 1em; height: 1em; margin: 0; vertical-align: middle; border: 1px solid #555; background-color: #0000ffff;"></div> under</div><div style="margin: 0 auto; display: inline-block;">bad <div title="#00000000" style="display: inline-block; width: 1em; height: 1em; margin: 0; vertical-align: middle; border: 1px solid #555; background-color: #00000000;"></div></div><div style="float: right;">over <div title="#242433ff" style="display: inline-block; width: 1em; height: 1em; margin: 0; vertical-align: middle; border: 1px solid #555; background-color: #242433ff;"></div></div></div></div></div>
+</div>
+<p>Jos visualisoinnissa halutaan tutkia arvojen poikkeavuutta, niiden keskipisteestä voidaan luoda diverging_palette, jossa keskellä on vaaleimmat värit (tai lisäämällä koodi center=”dark” tummat värit) ja molemmilla reunoilla eri värit tummentuen reunaa kohti. Tässä värit saadaan väriympyrästä, eli värejä kuvastavat ovat numerot (0-360) tarkoittavat asteitä väriympyrässä (Kennedy 2024).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">diverging_palette</span><span class="p">(</span><span class="mi">250</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="n">as_cmap</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div style="vertical-align: middle;"><strong>blend</strong> </div><div class="cmap"><img alt="blend colormap" title="blend" style="border: 1px solid #555;" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAgAAAABACAYAAABsv8+/AAAAFHRFWHRUaXRsZQBibGVuZCBjb2xvcm1hcKH0gPAAAAAadEVYdERlc2NyaXB0aW9uAGJsZW5kIGNvbG9ybWFwX6spFgAAADF0RVh0QXV0aG9yAE1hdHBsb3RsaWIgdjMuMTAuMywgaHR0cHM6Ly9tYXRwbG90bGliLm9yZ4Z6eFUAAAAzdEVYdFNvZnR3YXJlAE1hdHBsb3RsaWIgdjMuMTAuMywgaHR0cHM6Ly9tYXRwbG90bGliLm9yZyNea6EAAAHrSURBVHic7dZBbqMwAEBRp1frpeZscziopukghciBNlE3/70NhTrYJlT9l/c/f9cxxni7XP4dxtdhO95fv/7wNj1/PG677zi679n5dvedXp/MN567z7PP7W78tp6z8/3w+Z9dz7P7HE9+Py/a5zZ+/HS+V+3j9rn8/nu2+9z4/PMfY1k+D+t6PY71en1dbs/H1+/X7Xz/+cm43X3242bz7dczlsn1yXzzeSbXD/c/W9fR/mfP77f2vxu3X8/h97w8nH/+PS8H858d93i+6fPcrXv2/q7f3v/Z93zy/nz7Ob1q/7fX////AwBCBAAABAkAAAgSAAAQJAAAIEgAAECQAACAIAEAAEECAACCBAAABAkAAAgSAAAQJAAAIEgAAECQAACAIAEAAEECAACCBAAABAkAAAgSAAAQJAAAIEgAAECQAACAIAEAAEECAACCBAAABAkAAAgSAAAQJAAAIEgAAECQAACAIAEAAEECAACCBAAABAkAAAgSAAAQJAAAIEgAAECQAACAIAEAAEECAACCBAAABAkAAAgSAAAQJAAAIEgAAECQAACAIAEAAEECAACCBAAABAkAAAgSAAAQJAAAIEgAAECQAACAIAEAAEECAACCBAAABAkAAAgSAAAQJAAAIEgAAECQAACAoA8w8jHeF5vDIwAAAABJRU5ErkJggg=="></div><div style="vertical-align: middle; max-width: 514px; display: flex; justify-content: space-between;"><div style="float: left;"><div title="#4479bbff" style="display: inline-block; width: 1em; height: 1em; margin: 0; vertical-align: middle; border: 1px solid #555; background-color: #4479bbff;"></div> under</div><div style="margin: 0 auto; display: inline-block;">bad <div title="#00000000" style="display: inline-block; width: 1em; height: 1em; margin: 0; vertical-align: middle; border: 1px solid #555; background-color: #00000000;"></div></div><div style="float: right;">over <div title="#c3553aff" style="display: inline-block; width: 1em; height: 1em; margin: 0; vertical-align: middle; border: 1px solid #555; background-color: #c3553aff;"></div></div></div></div></div>
+</div>
+<p>Voit myös luoda liukuman, jossa on valittuna useampia värejä.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">color_palette</span><span class="p">(</span><span class="s2">&quot;YlOrRd&quot;</span><span class="p">,</span> <span class="n">as_cmap</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div style="vertical-align: middle;"><strong>YlOrRd</strong> </div><div class="cmap"><img alt="YlOrRd colormap" title="YlOrRd" style="border: 1px solid #555;" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAgAAAABACAYAAABsv8+/AAAAFXRFWHRUaXRsZQBZbE9yUmQgY29sb3JtYXA38LgZAAAAG3RFWHREZXNjcmlwdGlvbgBZbE9yUmQgY29sb3JtYXB+Z6D9AAAAMXRFWHRBdXRob3IATWF0cGxvdGxpYiB2My4xMC4zLCBodHRwczovL21hdHBsb3RsaWIub3Jnhnp4VQAAADN0RVh0U29mdHdhcmUATWF0cGxvdGxpYiB2My4xMC4zLCBodHRwczovL21hdHBsb3RsaWIub3JnI15roQAAAdtJREFUeJzt1lFy2jAUQFGT/S+ta7IyTQ1JlWgwE9J+3HN+PDIvkmEIcy9j/Brbb2N/u2zjz3Lb5vVxvc7N67tzi33Pzn37/K/PGaef88H7836rc37q/LOf4zw/P9e+uH9d7/f2e9Y+17nnnjNuc9ePZ1rvd17/1/O39/Gc+TG/vq/WZ+f+9989ts841u9fl+nz2Vc/j/P9r9fv5yzm7p437XN2bvG+Vj8Ln/5txuXjY32YO+7P89tlsd9q/u/Xv33+NH/2/P147tvX48Hr9HE+/Tp+eN+X4woAhAgAAAgSAAAQJAAAIEgAAECQAACAIAEAAEECAACCBAAABAkAAAgSAAAQJAAAIEgAAECQAACAIAEAAEECAACCBAAABAkAAAgSAAAQJAAAIEgAAECQAACAIAEAAEECAACCBAAABAkAAAgSAAAQJAAAIEgAAECQAACAIAEAAEECAACCBAAABAkAAAgSAAAQJAAAIEgAAECQAACAIAEAAEECAACCBAAABAkAAAgSAAAQJAAAIEgAAECQAACAIAEAAEECAACCBAAABAkAAAgSAAAQJAAAIEgAAECQAACAIAEAAEECAACCBAAABAkAAAgSAAAQJAAAIEgAAECQAACAIAEAAEGvr6StNFF2mq8AAAAASUVORK5CYII="></div><div style="vertical-align: middle; max-width: 514px; display: flex; justify-content: space-between;"><div style="float: left;"><div title="#ffffccff" style="display: inline-block; width: 1em; height: 1em; margin: 0; vertical-align: middle; border: 1px solid #555; background-color: #ffffccff;"></div> under</div><div style="margin: 0 auto; display: inline-block;">bad <div title="#00000000" style="display: inline-block; width: 1em; height: 1em; margin: 0; vertical-align: middle; border: 1px solid #555; background-color: #00000000;"></div></div><div style="float: right;">over <div title="#800026ff" style="display: inline-block; width: 1em; height: 1em; margin: 0; vertical-align: middle; border: 1px solid #555; background-color: #800026ff;"></div></div></div></div></div>
+</div>
+</section>
+</section>
+<section id="fontti-ja-context">
+<h3>Fontti ja context<a class="headerlink" href="#fontti-ja-context" title="Link to this heading">#</a></h3>
+<p>Yksinkertaisimmin voit nimetä kuvaajan lisäämällä koodiin plt.title(“nimi”). Koko työkirjaan fontin saa vaihdettua koodilla sns.set_theme(font=”fonttinimi”) tai yksittäiseen otsikkoon koodilla plt.title(“Otsikko”, fontsize=numero, family=”Fonttinimi”).</p>
+<p>Tämän koodin ajamalla saat listan käytettävissä olevista fonteista, vakiofontti on sans-serif.</p>
+<div class="cell tag_remove-output docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.font_manager</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">fm</span>
+
+<span class="n">font_names</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">({</span><span class="n">f</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">fm</span><span class="o">.</span><span class="n">fontManager</span><span class="o">.</span><span class="n">ttflist</span><span class="p">})</span>
+
+<span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">font_names</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Context= voit valita ns. minkä kokoisen visualisoinnin haluat, tässä tarkoitetaan mihin kokoluokkaan eri osat visualisoinnissa on skaalattu. Vaihtoehdot ovat pienimmästä suurimpaan paper, notebook (oletus), talk tai poster ja niiden nimi kuvaa käyttötarkoitusta, esimerkiksi paper= paperille tulostettavaksi sopiva. Fontin skaalattua kokoa voi muuttaa koodilla font_scale= teemassa, sen oletusarvo 1 tai yksittäisen visualisoinnin sisällä koodilla fontsize=valittu fonttikoko. Koko visualisoinnin kokoa voit muuttaa koodilla (figsize=(leveys, korkeus), jos haluat korkeuden olla esimerkiksi 2,5 sen on oltava kirjoitettu muotoon 2.5.</p>
+<p>Seuraavassa esimerkki, jossa visualisointi on muutettu pienemmäksi (paper) ja sen otsikon fontti ja fontin koko on muutettu.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">seaborn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sns</span>
+
+<span class="n">x</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+<span class="n">y</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">9</span><span class="p">]</span>
+
+<span class="k">with</span> <span class="n">sns</span><span class="o">.</span><span class="n">plotting_context</span><span class="p">(</span><span class="s2">&quot;paper&quot;</span><span class="p">):</span>
+    <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mf">3.5</span><span class="p">,</span> <span class="mf">2.5</span><span class="p">))</span>
+    <span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Esimerkki&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">fontname</span><span class="o">=</span><span class="s2">&quot;Arial&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/1bf5f562c00283a4c8a695a6e02835595c208d08f63d53a867fd47b03f715697.png" src="../_images/1bf5f562c00283a4c8a695a6e02835595c208d08f63d53a867fd47b03f715697.png" />
+</div>
+</div>
+<p>Tässä vielä muutama esimerkki aiemmin tehdyistä visualisoinneista, joiden ulkoasua on muokattu.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">top3_orgs</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">df_sales</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;sales_organization&quot;</span><span class="p">)[</span><span class="s2">&quot;contribution_margin&quot;</span><span class="p">]</span>
+    <span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+    <span class="o">.</span><span class="n">nlargest</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">index</span>
+<span class="p">)</span>
+
+<span class="n">df_filteredtop</span> <span class="o">=</span> <span class="n">df_marketing</span><span class="p">[</span><span class="n">df_marketing</span><span class="p">[</span><span class="s2">&quot;sales_organization&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">top3_orgs</span><span class="p">)]</span>
+
+<span class="n">g</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">catplot</span><span class="p">(</span>
+    <span class="n">data</span><span class="o">=</span><span class="n">df_filteredtop</span><span class="p">,</span>
+    <span class="n">x</span><span class="o">=</span><span class="s2">&quot;amount&quot;</span><span class="p">,</span>
+    <span class="n">y</span><span class="o">=</span><span class="s2">&quot;sales_organization&quot;</span><span class="p">,</span>
+    <span class="n">row</span><span class="o">=</span><span class="s2">&quot;area&quot;</span><span class="p">,</span>
+    <span class="n">kind</span><span class="o">=</span><span class="s2">&quot;bar&quot;</span><span class="p">,</span>
+    <span class="n">errorbar</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">height</span><span class="o">=</span><span class="mf">2.5</span><span class="p">,</span>
+    <span class="n">aspect</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>
+    <span class="n">estimator</span><span class="o">=</span><span class="nb">sum</span><span class="p">,</span>
+    <span class="n">palette</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;#4E79A7&quot;</span><span class="p">,</span> <span class="s2">&quot;#F28E2B&quot;</span><span class="p">,</span> <span class="s2">&quot;#76B7B2&quot;</span><span class="p">])</span>
+
+<span class="n">g</span><span class="o">.</span><span class="n">set_axis_labels</span><span class="p">(</span><span class="s2">&quot;Markkinointipanostus (€)&quot;</span><span class="p">,</span> <span class="s2">&quot;Organisaatio&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">11</span><span class="p">)</span>
+<span class="n">g</span><span class="o">.</span><span class="n">set_titles</span><span class="p">(</span><span class="s2">&quot;Alue: </span><span class="si">{row_name}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">11</span><span class="p">)</span>
+<span class="n">g</span><span class="o">.</span><span class="n">set_xticklabels</span><span class="p">(</span><span class="n">rotation</span><span class="o">=</span><span class="mi">45</span><span class="p">)</span>
+<span class="n">g</span><span class="o">.</span><span class="n">fig</span><span class="o">.</span><span class="n">subplots_adjust</span><span class="p">(</span><span class="n">top</span><span class="o">=</span><span class="mf">0.9</span><span class="p">)</span>
+<span class="n">g</span><span class="o">.</span><span class="n">fig</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s2">&quot;Top 3 organisaatiota: Markkinointipanostus alueittain&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">13</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="s2">&quot;semibold&quot;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/1fe158fe676822193efa6ccdb2bfc91ae768653729ce3d32a01e70af4c983839.png" src="../_images/1fe158fe676822193efa6ccdb2bfc91ae768653729ce3d32a01e70af4c983839.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">sns</span><span class="o">.</span><span class="n">axes_style</span><span class="p">(</span><span class="s2">&quot;whitegrid&quot;</span><span class="p">),</span> <span class="n">sns</span><span class="o">.</span><span class="n">color_palette</span><span class="p">(</span><span class="s2">&quot;crest&quot;</span><span class="p">):</span>
+    <span class="n">g</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">displot</span><span class="p">(</span>
+        <span class="n">data</span><span class="o">=</span><span class="n">df_sales</span><span class="p">,</span>
+        <span class="n">x</span><span class="o">=</span><span class="s2">&quot;net_price&quot;</span><span class="p">,</span>
+        <span class="n">binwidth</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+        <span class="n">shrink</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span>
+        <span class="n">kde</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">height</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+        <span class="n">aspect</span><span class="o">=</span><span class="mf">1.4</span>
+    <span class="p">)</span>
+
+    <span class="n">g</span><span class="o">.</span><span class="n">set_axis_labels</span><span class="p">(</span><span class="s2">&quot;Nettomyyntihinta&quot;</span><span class="p">,</span> <span class="s2">&quot;Frekvenssi&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">11</span><span class="p">)</span>
+    <span class="n">g</span><span class="o">.</span><span class="n">fig</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s2">&quot;Hintajakauma&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="s2">&quot;bold&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mf">1.05</span><span class="p">)</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/45547fed7300eab8a1eaddf2f08b0f9a5ed68e94d9e68964e6e7afb5aa68c39a.png" src="../_images/45547fed7300eab8a1eaddf2f08b0f9a5ed68e94d9e68964e6e7afb5aa68c39a.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_sample</span> <span class="o">=</span> <span class="n">df_sales</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">2000</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+
+<span class="n">g</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">pairplot</span><span class="p">(</span>
+    <span class="n">df_sample</span><span class="p">,</span>
+    <span class="n">x_vars</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;quantity&quot;</span><span class="p">,</span> <span class="s2">&quot;net_value&quot;</span><span class="p">,</span> <span class="s2">&quot;cost&quot;</span><span class="p">],</span>
+    <span class="n">y_vars</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;contribution_margin_pct&quot;</span><span class="p">],</span>
+    <span class="n">kind</span><span class="o">=</span><span class="s2">&quot;reg&quot;</span><span class="p">,</span>
+    <span class="n">plot_kws</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">&quot;scatter_kws&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;alpha&quot;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">,</span> <span class="s2">&quot;s&quot;</span><span class="p">:</span> <span class="mi">25</span><span class="p">,</span> <span class="s2">&quot;color&quot;</span><span class="p">:</span> <span class="s2">&quot;#2A9D8F&quot;</span><span class="p">},</span> 
+        <span class="s2">&quot;line_kws&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;color&quot;</span><span class="p">:</span> <span class="s2">&quot;#333333&quot;</span><span class="p">,</span> <span class="s2">&quot;lw&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">}</span>
+    <span class="p">},</span>
+    <span class="n">height</span><span class="o">=</span><span class="mf">3.5</span><span class="p">,</span> <span class="n">aspect</span><span class="o">=</span><span class="mf">1.2</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">ax</span> <span class="ow">in</span> <span class="n">g</span><span class="o">.</span><span class="n">axes</span><span class="o">.</span><span class="n">flatten</span><span class="p">():</span>
+    <span class="k">if</span> <span class="n">ax</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_facecolor</span><span class="p">(</span><span class="s2">&quot;#FDF6EC&quot;</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="n">ax</span><span class="o">.</span><span class="n">get_xlabel</span><span class="p">()</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;_&quot;</span><span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="p">)</span><span class="o">.</span><span class="n">title</span><span class="p">())</span>  
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="n">ax</span><span class="o">.</span><span class="n">get_ylabel</span><span class="p">()</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;_&quot;</span><span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="p">)</span><span class="o">.</span><span class="n">title</span><span class="p">())</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">subplots_adjust</span><span class="p">(</span><span class="n">top</span><span class="o">=</span><span class="mf">0.9</span><span class="p">)</span>
+<span class="n">g</span><span class="o">.</span><span class="n">fig</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s2">&quot;Myyntidatan pairplot: määrä, arvo, kustannus ja kate %&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/42cdf6e828ff93ffd1dc16ba895d8ff095f4c6a7528f60a16c85beb5878e6d87.png" src="../_images/42cdf6e828ff93ffd1dc16ba895d8ff095f4c6a7528f60a16c85beb5878e6d87.png" />
+</div>
+</div>
+<p>Tässä vielä <a class="reference external" href="https://seaborn.pydata.org/examples/index.html">linkki</a> Seabornin viralliseen galleriaan, jossa näet mihin kaikkeen sillä pystyy.</p>
+</section>
+</section>
+<section id="lahteet">
+<h2>Lähteet<a class="headerlink" href="#lahteet" title="Link to this heading">#</a></h2>
+<div class="dropdown admonition">
+<p class="admonition-title">Lähteet</p>
+<p>Karl, T. How to choose between Seaborn vs. Matplotlib. New Horizons. Päivitetty 12.2.2024. Saatavissa: (<a class="reference external" href="https://www.newhorizons.com/resources/blog/how-to-choose-between-seaborn-vs-matplotlib">https://www.newhorizons.com/resources/blog/how-to-choose-between-seaborn-vs-matplotlib</a>)</p>
+<p>Kennedy, E. <em>The HSB Color System: A Practitioner’s Primer</em>. Learn UI Design. Päivitetty 19.6.2024. Saatavissa: (<a class="reference external" href="https://www.learnui.design/blog/the-hsb-color-system-practicioners-primer.html">https://www.learnui.design/blog/the-hsb-color-system-practicioners-primer.html</a>)</p>
+<p>Seaborn: Statistical Data Visualization. s.a. Seaborn. Saatavissa:(<a class="reference external" href="https://seaborn.pydata.org/index.html">https://seaborn.pydata.org/index.html</a>)</p>
+<p>Xamk. s.a. Xamkin brändiohjeisto. Saatavissa: (<a class="reference external" href="https://www.xamk.fi/xamkin-brandiohjeisto/#varit">https://www.xamk.fi/xamkin-brandiohjeisto/#varit</a>)</p>
+</div>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./content"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#no-code-vs-python-seaborn-visualisoinnit">No-code vs Python-Seaborn visualisoinnit</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#aloitus">Aloitus</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tilastolliset-visualisoinnit">Tilastolliset visualisoinnit</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#relaatiokaaviot">Relaatiokaaviot</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hajontakaavio">Hajontakaavio</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#viivakaavio">Viivakaavio</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kategoriset-kaaviot">Kategoriset kaaviot</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pistekaaviot">Pistekaaviot</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jakaumakaaviot">Jakaumakaaviot</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#arviokaaviot">Arviokaaviot</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jakaumien-visualisointi">Jakaumien visualisointi</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#histogrammi">Histogrammi</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tiheyskayra">Tiheyskäyrä</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#kahden-muuttujan-jakauma">Kahden muuttujan jakauma</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jointplot-ja-pairplot">Jointplot ja pairplot</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#moniulotteiset-visualisoinnit">Moniulotteiset visualisoinnit</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#facetgrid">Facetgrid</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pairgrid">Pairgrid</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lineaariset-regressiomallit">Lineaariset regressiomallit</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#teemojen-ja-tyylien-mukauttaminen">Teemojen ja tyylien mukauttaminen</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tyyli">Tyyli</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#style">Style</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#varipaletit">Väripaletit</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#varipalettien-muokkaus">Väripalettien muokkaus</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fontti-ja-context">Fontti ja context</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lahteet">Lähteet</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Mirka
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
